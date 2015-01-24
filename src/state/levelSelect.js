@@ -10,7 +10,7 @@ var LevelSelect = {
       game.state.start("Play");
     }
     game.input.keyboard.onDownCallback = startGame;
-    this.game.input.onDown.add(startGame);
+    game.input.onDown.add(startGame);
   },
   update: function() {
   },

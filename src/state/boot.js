@@ -7,7 +7,9 @@ var Boot = {
     game.load.image("PreloadBar", "assets/PreloadBar.png");
   },
   create: function() {
-    this.game.state.start("Preload");
+    game.input.maxPointers = 1;
+
+    game.state.start("Preload");
   },
   update: function() {
   },

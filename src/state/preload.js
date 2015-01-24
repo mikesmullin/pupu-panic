@@ -8,9 +8,10 @@ var Preload = {
     game.load.audio("Music", ["assets/MegaBlaster.mp3", "assets/MegaBlaster.ogg"]);
   },
   create: function() {
-    this.game.state.start("Title");
+    this.game.state.start("Play");
     var music = game.add.audio("Music", 0.7, true);
-    music.play();
+    // so sick of this music
+    // music.play();
   },
   update: function() {
   },

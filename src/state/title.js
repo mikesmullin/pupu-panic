@@ -35,7 +35,7 @@ var Title = {
       game.state.start("LevelSelect");
     }
     game.input.keyboard.onDownCallback = startGame;
-    this.game.input.onDown.add(startGame);
+    game.input.onDown.add(startGame);
 
     if (highScore) {
       var scoreText = game.add.text(0, 250, "HIGH SCORE " + highScore, {fill: "#FFB6C1", font: 30 + "px Impact"});
