@@ -333,6 +333,8 @@ var Play = {
         customer.y = 200; // align with bottom of potties
         if (!customer.state.urgeToPurgeTimer) {
           customer.state.urgeToPurgeTimer = setTimeout(function() {
+            customer.input.disableDrag();
+            customer.input.stop();
             customer.state.messYoself();
           }, 3000);
         }
