@@ -32,7 +32,7 @@ var Title = {
 
     function startGame(event) {
       // game.scale.startFullScreen();
-      game.state.start("Play");
+      game.state.start("LevelSelect");
     }
     game.input.keyboard.onDownCallback = startGame;
     this.game.input.onDown.add(startGame);
