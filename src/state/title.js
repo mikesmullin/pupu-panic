@@ -5,22 +5,34 @@ var Title = {
     var _this = this;
     this.game.add.sprite(0, 0, "Sprites", "Background_1.png");
 
-    var titleText = this.game.add.sprite(0, 0, "Sprites", "Food_FishBurger_Sick_1.png");
+    var titleText = this.game.add.sprite(game.width / 2, -150, "Sprites", "Food_BoneBun_Good_1.png");
     titleText.anchor.setTo(0.5, 0.5);
-    titleText.position.x = game.width / 2;
-    titleText.position.y = game.height / 2 - 70;
+    game.add.tween(titleText)
+    .to({y: game.height / 2 - 70}, 1800, Phaser.Easing.Bounce.Out)
+    .start();
 
-    function startGame(event) {
-      // game.scale.startFullScreen();
+    var playButton = this.game.add.sprite(game.width / 2, game.height / 2 + 120, "Sprites", "Food_CarrotBun_Good_1.png");
+    playButton.alpha = 0;
+    playButton.anchor.setTo(0.5, 0.5);
+    playButton.inputEnabled = true;
+    playButton.events.onInputDown.add(function() {
       game.state.start("LevelSelect");
-    }
-    game.input.keyboard.onDownCallback = startGame;
-    game.input.onDown.add(startGame);
-
-    //if (highScore) {
-    //  var scoreText = game.add.text(0, 250, "HIGH SCORE " + highScore, {fill: "#FFB6C1", font: 30 + "px Impact"});
-    //  scoreText.position.x = game.width / 2 - scoreText.width / 2;
-    //}
+    });
+    game.add.tween(playButton)
+    .to({alpha: 1}, 500, Phaser.Easing.Quadratic.InOut)
+    .delay(2000)
+    .start();
+    
+    var creditsButton = this.game.add.sprite(game.width / 2, game.height / 2 + 240, "Sprites", "Food_CornBurger_Good_1.png");
+    creditsButton.alpha = 0;
+    creditsButton.anchor.setTo(0.5, 0.5);
+    creditsButton.events.onInputDown.add(function() {
+      game.state.start("Credits");
+    });
+    game.add.tween(creditsButton)
+    .to({alpha: 1}, 500, Phaser.Easing.Quadratic.InOut)
+    .delay(2250)
+    .start();
   },
   update: function() {
   },

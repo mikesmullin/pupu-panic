@@ -10,39 +10,207 @@
 },
 "Customer_Bunny_Walk_1.png":
 {
-	"frame": {"x":754,"y":2,"w":266,"h":632},
+	"frame": {"x":754,"y":274,"w":266,"h":632},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":266,"h":632},
 	"sourceSize": {"w":266,"h":632}
 },
-"Food_CarrotBun_1.png":
+"Food_BoneBun_Bad_1.png":
 {
-	"frame": {"x":754,"y":636,"w":177,"h":133},
+	"frame": {"x":1186,"y":452,"w":173,"h":105},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":0,"w":177,"h":133},
-	"sourceSize": {"w":203,"h":133}
+	"spriteSourceSize": {"x":0,"y":36,"w":173,"h":105},
+	"sourceSize": {"w":173,"h":173}
 },
-"Food_CarrotBun_Sick_1.png":
+"Food_BoneBun_Good_1.png":
 {
-	"frame": {"x":754,"y":1347,"w":159,"h":147},
+	"frame": {"x":1376,"y":967,"w":170,"h":95},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":6,"y":0,"w":159,"h":147},
-	"sourceSize": {"w":165,"h":152}
+	"spriteSourceSize": {"x":0,"y":46,"w":170,"h":95},
+	"sourceSize": {"w":173,"h":173}
 },
-"Food_FishBurger_Sick_1.png":
+"Food_CarrotBun_Bad_1.png":
 {
-	"frame": {"x":754,"y":1496,"w":158,"h":133},
+	"frame": {"x":1359,"y":274,"w":177,"h":141},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":0,"w":158,"h":133},
-	"sourceSize": {"w":158,"h":146}
+	"spriteSourceSize": {"x":0,"y":36,"w":177,"h":141},
+	"sourceSize": {"w":177,"h":177}
+},
+"Food_CarrotBun_Good_1.png":
+{
+	"frame": {"x":1089,"y":971,"w":177,"h":95},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":45,"w":177,"h":95},
+	"sourceSize": {"w":177,"h":177}
+},
+"Food_CornBurger_Bad_1.png":
+{
+	"frame": {"x":918,"y":1048,"w":165,"h":136},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":11,"w":165,"h":136},
+	"sourceSize": {"w":171,"h":171}
+},
+"Food_CornBurger_Good_1.png":
+{
+	"frame": {"x":1085,"y":1068,"w":165,"h":116},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":31,"w":165,"h":116},
+	"sourceSize": {"w":171,"h":171}
+},
+"Food_CornSalad_Bad_1.png":
+{
+	"frame": {"x":1376,"y":838,"w":166,"h":127},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":166,"h":127},
+	"sourceSize": {"w":167,"h":167}
+},
+"Food_CornSalad_Good_1.png":
+{
+	"frame": {"x":1110,"y":1186,"w":166,"h":127},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":166,"h":127},
+	"sourceSize": {"w":167,"h":167}
+},
+"Food_DragonBurger_Bad_1.png":
+{
+	"frame": {"x":754,"y":1196,"w":185,"h":139},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":20,"w":185,"h":139},
+	"sourceSize": {"w":187,"h":187}
+},
+"Food_DragonBurger_Good_1.png":
+{
+	"frame": {"x":1189,"y":843,"w":185,"h":126},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":33,"w":185,"h":126},
+	"sourceSize": {"w":187,"h":187}
+},
+"Food_FishKebob_Bad_1.png":
+{
+	"frame": {"x":1186,"y":274,"w":171,"h":176},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":171,"h":176},
+	"sourceSize": {"w":176,"h":176}
+},
+"Food_FishKebob_Good_1.png":
+{
+	"frame": {"x":1189,"y":559,"w":171,"h":141},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":171,"h":141},
+	"sourceSize": {"w":176,"h":176}
+},
+"Food_FlyKebob_Bad_1.png":
+{
+	"frame": {"x":1252,"y":1068,"w":165,"h":108},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":19,"w":165,"h":108},
+	"sourceSize": {"w":167,"h":167}
+},
+"Food_FlyKebob_Good_1.png":
+{
+	"frame": {"x":1278,"y":1178,"w":165,"h":108},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":19,"w":165,"h":108},
+	"sourceSize": {"w":167,"h":167}
+},
+"Food_MouseBurger_Bad_1.png":
+{
+	"frame": {"x":1189,"y":702,"w":182,"h":139},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":15,"w":182,"h":139},
+	"sourceSize": {"w":182,"h":182}
+},
+"Food_MouseBurger_Good_1.png":
+{
+	"frame": {"x":1361,"y":417,"w":182,"h":139},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":15,"w":182,"h":139},
+	"sourceSize": {"w":182,"h":182}
+},
+"Food_Salad_Bad_1.png":
+{
+	"frame": {"x":1022,"y":562,"w":165,"h":143},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":165,"h":143},
+	"sourceSize": {"w":172,"h":172}
+},
+"Food_Salad_Good_1.png":
+{
+	"frame": {"x":1022,"y":707,"w":165,"h":143},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":165,"h":143},
+	"sourceSize": {"w":172,"h":172}
+},
+"Food_SteakKebob_Bad_1.png":
+{
+	"frame": {"x":1373,"y":698,"w":169,"h":138},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":169,"h":138},
+	"sourceSize": {"w":169,"h":169}
+},
+"Food_SteakKebob_Good_1.png":
+{
+	"frame": {"x":918,"y":908,"w":169,"h":138},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":169,"h":138},
+	"sourceSize": {"w":169,"h":169}
+},
+"Food_WormBun_Bad_1.png":
+{
+	"frame": {"x":1362,"y":558,"w":170,"h":138},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":32,"w":170,"h":138},
+	"sourceSize": {"w":170,"h":170}
+},
+"Food_WormBun_Good_1.png":
+{
+	"frame": {"x":1419,"y":1064,"w":170,"h":103},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":44,"w":170,"h":103},
+	"sourceSize": {"w":170,"h":170}
+},
+"Food_WormKebob_Bad_1.png":
+{
+	"frame": {"x":941,"y":1186,"w":167,"h":132},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":36,"w":167,"h":132},
+	"sourceSize": {"w":168,"h":168}
+},
+"Food_WormKebob_Good_1.png":
+{
+	"frame": {"x":1445,"y":1169,"w":167,"h":93},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":44,"w":167,"h":93},
+	"sourceSize": {"w":168,"h":168}
 },
 "Potty_Free_1.png":
 {
-	"frame": {"x":754,"y":771,"w":162,"h":286},
+	"frame": {"x":754,"y":908,"w":162,"h":286},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":162,"h":286},
@@ -50,7 +218,7 @@
 },
 "Potty_Taken_1.png":
 {
-	"frame": {"x":754,"y":1059,"w":162,"h":286},
+	"frame": {"x":1022,"y":274,"w":162,"h":286},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":162,"h":286},
@@ -58,27 +226,19 @@
 },
 "Table_1.png":
 {
-	"frame": {"x":2,"y":1338,"w":750,"h":270},
+	"frame": {"x":754,"y":2,"w":750,"h":270},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":750,"h":270},
 	"sourceSize": {"w":750,"h":270}
-},
-"Though_Bubble_1.png":
-{
-	"frame": {"x":2,"y":1610,"w":290,"h":278},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":290,"h":278},
-	"sourceSize": {"w":290,"h":278}
 }},
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "Pupu_Assets.png",
 	"format": "RGBA8888",
-	"size": {"w":1022,"h":1890},
+	"size": {"w":1614,"h":1338},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:5ee76d4196a161cb185ac2ff30c54f2f:56d607d1c7120e0be2663141c8541615:8ee01b2c097d3a913279a8681b807879$"
+	"smartupdate": "$TexturePacker:SmartUpdate:64ad48c14c620c160c63fbc59313061e:5190c5c5fff31a56014cddad9464d367:8ee01b2c097d3a913279a8681b807879$"
 }
 }
