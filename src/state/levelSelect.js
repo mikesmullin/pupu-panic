@@ -36,12 +36,12 @@ var LevelSelect = {
       h);
 
 
-    //function startGame(event) {
-    //  // game.scale.startFullScreen();
-    //  game.state.start("Play");
-    //}
-    //game.input.keyboard.onDownCallback = startGame;
-    //this.game.input.onDown.add(startGame);
+    function startGame(event) {
+      // game.scale.startFullScreen();
+      game.state.start("Play");
+    }
+    game.input.keyboard.onDownCallback = startGame;
+    this.game.input.onDown.add(startGame);
   },
   update: function() {
   },
