@@ -17,7 +17,7 @@ var Play = {
     this.timer = 0;
     this.foodTypes = [];
     this.maxFoodDepth = 1;
-    
+
     // ui components
     this.game.add.sprite(0, 0, "Sprites", "Background_1.png");
     this.pottyGroup = game.add.group();
@@ -65,7 +65,7 @@ var Play = {
         // if (lastX !== -1 || lastY !== -1) {
         //   this.foodItems.children.forEach(function(foodItem) {
         //     foodItem.body.velocity.x = moveAmountX * 10;
-        //   });          
+        //   });
         // }
         lastX = -1;
         lastY = -1;
@@ -85,13 +85,13 @@ var Play = {
     if (this.timer <= 0) {
       console.log("YOU LOSE");
     }
-    
+
     // scroll the food items with pointer
     // console.log(game.input.activePointer.movementX);
 
     // make customer and move him to position
     if (this.customers.length < this.numCustomerPositions && Math.random() > .99) {
-      var customer = this.makeCustomer(this.customerTypes[Math.floor(Math.random() * this.customerTypes)]);
+      var customer = this.makeCustomer();
       this.customers.push(customer);
       for (var i = this.numCustomerPositions - 1; i >= 0; i --) {
         if (!this.customerPositions[i]) {
@@ -102,10 +102,10 @@ var Play = {
           game.add.tween(customer)
           .to({x: destX}, distance * 2.1)
           .start();
-          // game.add.tween(customer.state.thoughtBubble)
-          // .to({alpha: 1}, 500)
-          // .delay(1000)
-          // .start();
+          game.add.tween(customer.state.thoughtBubble)
+          .to({alpha: 1}, 500)
+          .delay(1000)
+          .start();
           break;
         }
       }
@@ -126,11 +126,11 @@ var Play = {
   render: function() {
   },
   loadLevel: function() {
-    this.cashGoal = 10;
-    this.timer = 100;
-    this.numCustomerPositions = 3;
+    this.cashGoal = 10; // passed from levelSelect
+    this.timer = 100; // passed from levelSelect
+    this.numCustomerPositions = 3; // passed from levelSelect
     // add items to scrollable list
-    var numFoodItems = 8;
+    var numFoodItems = 8; // passed from levelSelect
     this.customerTypes = [0];
     // this.foodTypes = [0, 1, 2];
     this.foodTypes = [0];
@@ -207,9 +207,9 @@ var Play = {
       if (eaten) {
         // fade out food that was eaten and thought bubble if last piece
         if (sick || !customer.state.foodTypes.length) {
-          // game.add.tween(customer.state.thoughtBubble)
-          // .to({alpha: 0}, 500)
-          // .start();
+          game.add.tween(customer.state.thoughtBubble)
+          .to({alpha: 0}, 500)
+          .start();
         }
         if (sick) {
           // TODO: play sick face
@@ -255,8 +255,8 @@ var Play = {
         replacementFood.y = game.height;
         game.add.tween(replacementFood)
         .to({x: food.state.originalX, y:food.state.originalY}, 100)
-        .start();        
-        
+        .start();
+
         food.kill();
         this.foodItems.remove(food);
       }
@@ -271,11 +271,11 @@ var Play = {
     // food.body.drag.y = 5;
     this.foodItems.add(food);
 
-    return food; 
+    return food;
   },
   makeFoodSprite: function(foodType, x, y) {
     var food = game.add.sprite(x, y, "Sprites");
-    
+
     // set animation
     switch (foodType) {
       case 0: food.animations.add("chill", ["Food_CarrotBun_1.png"], 30, true); break;
@@ -286,44 +286,32 @@ var Play = {
 
     return food;
   },
-  makeCustomer: function(type) {
+  makeCustomer: function() {
     var customer = game.add.sprite(-CUSTOMER_SIZE * 1.5, game.height - CUSTOMER_SIZE * 2.15);
 
     // state
-    customer.state = {
-      foodTypes: [],
-      // thoughtBubble: null,
-      // foodThoughts: [],
-      sick: false,
-      jumpTween: null,
-      scaleStartY: -1,
-    };
-    // var foodDepth = Math.ceil(Math.random() * this.maxFoodDepth);
-    // for (var i = 0; i < foodDepth; i ++) {
-    //   var foodType = this.foodTypes[Math.floor(Math.random() * this.foodTypes.length)];
-    //   customer.state.foodTypes.push(foodType);
-    // }
+    customer.state = {foodTypes: [], thoughtBubble: null, foodThoughts: [], sick: false, jumpTween: null, scaleStartY: -1};
+    var foodDepth = Math.ceil(Math.random() * this.maxFoodDepth);
+    for (var i = 0; i < foodDepth; i ++) {
+      var foodType = this.foodTypes[Math.floor(Math.random() * this.foodTypes.length)];
+      customer.state.foodTypes.push(foodType);
+    }
     // graphics
     var body = game.add.sprite(0, 0, "Sprites");
-    switch (type) {
-      case 0:
-        body.animations.add("walk", ["Customer_Bunny_Walk_1.png"], 15, true);
-        customer.state.foodTypes = [0];
-        break;
-    }
+    body.animations.add("walk", ["Customer_Bunny_Walk_1.png"], 15, true);
     body.play("walk");
-    // var thoughtBubble = game.add.sprite(60, -130, "Sprites", "Though_Bubble_1.png");
-    // thoughtBubble.alpha = 0;
-    // customer.state.thoughtBubble = thoughtBubble;
-    // for (i = 0; i < customer.state.foodTypes.length; i ++) {
-    //   var foodThought = this.makeFoodSprite(customer.state.foodTypes[i]);
-    //   foodThought.state = {foodType: customer.state.foodTypes[i]};
-    //   thoughtBubble.addChild(foodThought);
-    //   customer.state.foodThoughts.push(foodThought);
-    //   // TODO: spread'em out
-    // }
+    var thoughtBubble = game.add.sprite(60, -130, "Sprites", "Though_Bubble_1.png");
+    thoughtBubble.alpha = 0;
+    customer.state.thoughtBubble = thoughtBubble;
+    for (i = 0; i < customer.state.foodTypes.length; i ++) {
+      var foodThought = this.makeFoodSprite(customer.state.foodTypes[i]);
+      foodThought.state = {foodType: customer.state.foodTypes[i]};
+      thoughtBubble.addChild(foodThought);
+      customer.state.foodThoughts.push(foodThought);
+      // TODO: spread'em out
+    }
     customer.addChild(body);
-    // customer.addChild(thoughtBubble);
+    customer.addChild(thoughtBubble);
 
     // animation
     var toY = customer.y - 30;

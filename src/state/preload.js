@@ -23,10 +23,10 @@ var Preload = {
     game.load.audio("YouWin", ["assets/You_Win_1.mp3", "assets/You_Win_1.ogg"]);
   },
   create: function() {
-    this.game.state.start("Play");
+    this.game.state.start("Title");
     var music = game.add.audio("Music", 0.7, true);
     // so sick of this music
-    // music.play();
+    music.play();
   },
   update: function() {
   },
