@@ -10,6 +10,12 @@ var Play = {
     this.numCustomerPositions = 0;
     this.customerPositions = {};
     this.customers = [];
+    this.cash = 0;
+    this.displayCash = 0;
+    this.cashGoal = 0;
+
+    this.scoreText = game.add.text(this.game.width - 150, 15, "Cash: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
+
     this.loadLevel();
 
     // hacky sweet move tracking
@@ -50,6 +56,12 @@ var Play = {
   },
   update: function() {
     var _this = this;
+
+    // update cash text
+    if (this.displayCash !== this.cash) {
+      this.scoreText.text = "Cash: " + this.displayCash.toFixed(2);
+    }
+
     
     // scroll the food items with pointer
     // console.log(game.input.activePointer.movementX);
@@ -75,6 +87,7 @@ var Play = {
   render: function() {
   },
   loadLevel: function() {
+    this.cashGoal = 50;
     this.numCustomerPositions = 3;
     // add items to scrollable list
     var numFoodItems = 15;
@@ -132,6 +145,18 @@ var Play = {
         game.add.tween(customer)
         .to({x: game.width}, distance * 3.3)
         .start();
+
+        var cashWon = Math.random() * 1 + 1;
+        this.cash += cashWon;
+        if (this.cash >= this.cashGoal) {
+          // YOU WIN
+          console.log("YOU WIN");
+        }
+        game.add.tween(this)
+        .to({displayCash: this.cash}, 1000)
+        .start();
+
+        // TODO: make a cash particle
 
         // add new piece of food
         var replacementFood = this.makeFood();
