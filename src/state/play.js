@@ -92,7 +92,11 @@ var Play = {
           var distance = destX - customer.position.x;
           this.customerPositions[i] = customer;
           game.add.tween(customer)
-          .to({x: destX}, distance * 3.3)
+          .to({x: destX}, distance * 2.1)
+          .start();
+          game.add.tween(customer.state.thoughtBubble)
+          .to({alpha: 1}, 500)
+          .delay(1000)
           .start();
           break;
         }
@@ -249,7 +253,7 @@ var Play = {
     var customer = game.add.sprite(-CUSTOMER_SIZE * 1.5, game.height - CUSTOMER_SIZE * 2.15);
 
     // state
-    customer.state = {foodTypes: [], thoughtBubble: null, foodThoughts: [], sick: false};
+    customer.state = {foodTypes: [], thoughtBubble: null, foodThoughts: [], sick: false, jumpTween: null};
     var foodDepth = Math.ceil(Math.random() * this.maxFoodDepth);
     for (var i = 0; i < foodDepth; i ++) {
       var foodType = this.foodTypes[Math.floor(Math.random() * this.foodTypes.length)];
@@ -260,6 +264,7 @@ var Play = {
     body.animations.add("walk", ["Customer_Bunny_Walk_1.png"], 15, true);
     body.play("walk");
     var thoughtBubble = game.add.sprite(60, -130, "Sprites", "Though_Bubble_1.png");
+    thoughtBubble.alpha = 0;
     customer.state.thoughtBubble = thoughtBubble;
     for (i = 0; i < customer.state.foodTypes.length; i ++) {
       var foodThought = this.makeFoodSprite(customer.state.foodTypes[i]);
@@ -270,6 +275,10 @@ var Play = {
     }
     customer.addChild(body);
     customer.addChild(thoughtBubble);
+
+    // animation
+    var toY = customer.y - 30;
+    customer.state.jumpTween = game.add.tween(customer).to({y: toY}, Math.random() * 100 + 100, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
 
     // physics
     game.physics.enable(customer, Phaser.Physics.ARCADE);
