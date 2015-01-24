@@ -133,7 +133,7 @@ var Play = {
     // add items to scrollable list
     var numFoodItems = 8;
     this.customerTypes = [0];
-    this.foodTypes = [0, 1, 2];
+    this.foodTypes = [0, 1, 2, 3, 4];
     for (var i = 0; i < numFoodItems; i ++) {
       var food = this.makeFood();
       food.position.x = game.width / 2 - FOOD_ITEM_SIZE * numFoodItems / 2 + i * FOOD_ITEM_SIZE;
@@ -152,7 +152,7 @@ var Play = {
   makeFood: function() {
     var _this = this;
     var foodType = this.foodTypes[Math.floor(Math.random() * this.foodTypes.length)];
-    var food = this.makeFoodSprite(foodType, 0, game.height - FOOD_ITEM_SIZE);
+    var food = this.makeFoodSprite(foodType, Math.random() > .8 ? true : false, 0, game.height - FOOD_ITEM_SIZE);
 
     // set state
     food.state = {originalX: -1, originalY: -1, foodType: foodType};
@@ -253,15 +253,34 @@ var Play = {
 
     return food;
   },
-  makeFoodSprite: function(foodType, x, y) {
+  // 0 - bunny
+  // 1 - cat
+  // 2 - dog
+  // 3 - bird
+  // 4 - frog
+  makeFoodSprite: function(foodType, rotten, x, y) {
     var food = game.add.sprite(x, y, "Sprites");
 
     // set animation
+    var foodName = "";
+    var foodNames = null;
     switch (foodType) {
-      case 0: food.animations.add("chill", ["Food_CornBurger_Good_1.png"], 30, true); break;
-      case 1: food.animations.add("chill", ["Food_CornSalad_Bad_1.png"], 30, true); break;
-      case 2: food.animations.add("chill", ["Food_CornSalad_Good_1.png"], 30, true); break;
+      case 0: foodNames = ["CarrotBun", "Salad"]; break;
+      case 1: foodNames = ["FishKebob", "MouseBurger"]; break;
+      case 2: foodNames = ["BoneBun", "SteakKebob"]; break;
+      case 3: foodNames = ["WormBun", "CornBurger"]; break;
+      case 4: foodNames = ["FlyKebob", "DragonBurger"]; break;
     }
+
+    foodName = "Food_" + foodNames[Math.floor(Math.random() * foodNames.length)] + "_";
+    if (rotten) {
+      foodName += "Bad"
+    }
+    else {
+      foodName += "Good"
+    }
+    foodName += "_1.png";
+    food.animations.add("chill", [foodName], 30, true);
     food.play("chill");
 
     return food;
