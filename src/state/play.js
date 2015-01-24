@@ -258,9 +258,9 @@ var Play = {
 
     // set animation
     switch (foodType) {
-      case 0: food.animations.add("chill", ["Food_CarrotBun_1.png"], 30, true); break;
-      case 1: food.animations.add("chill", ["Food_CarrotBun_Sick_1.png"], 30, true); break;
-      case 2: food.animations.add("chill", ["Food_FishBurger_Sick_1.png"], 30, true); break;
+      case 0: food.animations.add("chill", ["Food_CornBurger_Good_1.png"], 30, true); break;
+      case 1: food.animations.add("chill", ["Food_CornSalad_Bad_1.png"], 30, true); break;
+      case 2: food.animations.add("chill", ["Food_CornSalad_Good_1.png"], 30, true); break;
     }
     food.play("chill");
 
