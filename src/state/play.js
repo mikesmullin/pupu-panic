@@ -27,6 +27,13 @@ var Play = {
     this.scoreText = game.add.text(this.game.width - 150, 15, "Cash: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
     this.timerText = game.add.text(10, 15, "Time: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
     
+    // audio
+    this.eatSound = game.add.audio("EatingFood", 1.0);
+    this.moneyGainedSound = game.add.audio("MoneyGained", 1.0);
+    this.pickUpFoodSound = game.add.audio("PickingUpFood", 1.0);
+    this.sickSound = game.add.audio("UhOh", 1.0);
+    this.winSound = game.add.audio("YouWin", 1.0);
+
     this.loadLevel();
 
     // hacky sweet move tracking
@@ -119,13 +126,14 @@ var Play = {
   render: function() {
   },
   loadLevel: function() {
-    this.cashGoal = 50;
+    this.cashGoal = 10;
     this.timer = 100;
     this.numCustomerPositions = 3;
     // add items to scrollable list
     var numFoodItems = 8;
     this.customerTypes = [0];
-    this.foodTypes = [0, 1, 2];
+    // this.foodTypes = [0, 1, 2];
+    this.foodTypes = [0];
     for (var i = 0; i < numFoodItems; i ++) {
       var food = this.makeFood();
       food.position.x = game.width / 2 - FOOD_ITEM_SIZE * numFoodItems / 2 + i * FOOD_ITEM_SIZE;
@@ -135,7 +143,7 @@ var Play = {
     for (i = 0; i < this.numPotties; i ++) {
       this.pottyGroup.add(this.makePotty(15 + game.width / this.numPotties * i, 150));
     }
-
+    
     // var food = this.foodItems.getFirstExists(false);
     // if (food) {
     //   food.reset(x + i * 63, game.height - height - 64 - hopHeight);
@@ -155,6 +163,7 @@ var Play = {
     food.events.onDragStart.add(function() {
       food.state.originalX = food.position.x;
       food.state.originalY = food.position.y;
+      this.pickUpFoodSound.play();
     }, this);
     food.events.onDragStop.add(function() {
       // see if food landed on animal head. If it didn't, put it back
@@ -166,7 +175,11 @@ var Play = {
           if (customer.state.sick) {
             return;
           }
+          
           eaten = true;
+          // play eat sound
+          _this.eatSound.play();
+
           for (var j = customer.state.foodTypes.length - 1; j >= 0; j --) {
             var foodType = customer.state.foodTypes[j];
             if (foodType === food.state.foodType) {
@@ -200,6 +213,7 @@ var Play = {
         }
         if (sick) {
           // TODO: play sick face
+          this.sickSound.play();
         }
 
         if (customer.state.foodTypes.length === 0 && !sick) {
@@ -224,9 +238,11 @@ var Play = {
           // TODO: make a cash particle
           var cashWon = Math.random() * 1 + 1;
           this.cash += cashWon;
+          this.moneyGainedSound.play();
           if (this.cash >= this.cashGoal) {
             // YOU WIN
             console.log("YOU WIN");
+            _this.winSound.play();
           }
           game.add.tween(this)
           .to({displayCash: this.cash}, 1000)
