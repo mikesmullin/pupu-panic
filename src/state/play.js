@@ -1,5 +1,5 @@
-var FOOD_ITEM_SIZE = 64;
-var CUSTOMER_SIZE = 200;
+var FOOD_ITEM_SIZE = 160;
+var CUSTOMER_SIZE = 240;
 
 var Play = {
   preload: function() {
@@ -18,10 +18,13 @@ var Play = {
     this.foodTypes = [];
     this.maxFoodDepth = 1;
     
-    // state components
+    // ui components
+    this.game.add.sprite(0, 0, "Sprites", "Background_1.png");
+    this.customersGroup = game.add.group();
+    this.game.add.sprite(0, game.height - 160, "Sprites", "Table_1.png");
+    this.foodItems = game.add.group();
     this.scoreText = game.add.text(this.game.width - 150, 15, "Cash: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
     this.timerText = game.add.text(10, 15, "Time: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
-    this.foodItems = game.add.group();
     
     this.loadLevel();
 
@@ -31,7 +34,7 @@ var Play = {
     var moveAmountX = -1;
     var moveAmountY = -1;
     game.input.addMoveCallback(function(pointer, x, y) {
-      if (pointer.isDown && y > game.height - 100) {
+      if (pointer.isDown && y > game.height - 150) {
         moveAmountX = x - lastX;
         moveAmountY = y - lastY;
         if (lastX != -1) {
@@ -85,7 +88,7 @@ var Play = {
       for (var i = this.numCustomerPositions - 1; i >= 0; i --) {
         if (!this.customerPositions[i]) {
           var padding = 20;
-          var destX = (game.width - CUSTOMER_SIZE - padding) / this.numCustomerPositions * i + padding / 2;
+          var destX = -30 + (game.width + 40) / this.numCustomerPositions * i;
           var distance = destX - customer.position.x;
           this.customerPositions[i] = customer;
           game.add.tween(customer)
@@ -103,7 +106,7 @@ var Play = {
     this.timer = 100;
     this.numCustomerPositions = 3;
     // add items to scrollable list
-    var numFoodItems = 15;
+    var numFoodItems = 8;
     this.foodTypes = [0, 1, 2];
     for (var i = 0; i < numFoodItems; i ++) {
       var food = this.makeFood();
@@ -151,6 +154,8 @@ var Play = {
           if (sick) {
             customer.state.foodTypes = [];
             customer.state.sick = true;
+            customer.inputEnabled = true;
+            customer.input.enableDrag(false);
           }
           else {
             customer.state.foodTypes.splice(j, 1);
@@ -232,16 +237,16 @@ var Play = {
     
     // set animation
     switch (foodType) {
-      case 0: food.animations.add("chill", ["Cat1_1.png"], 30, true); break;
-      case 1: food.animations.add("chill", ["Cat2_1.png"], 30, true); break;
-      case 2: food.animations.add("chill", ["Cat3_1.png"], 30, true); break;
+      case 0: food.animations.add("chill", ["Food_CarrotBun_1.png"], 30, true); break;
+      case 1: food.animations.add("chill", ["Food_CarrotBun_Sick_1.png"], 30, true); break;
+      case 2: food.animations.add("chill", ["Food_FishBurger_Sick_1.png"], 30, true); break;
     }
     food.play("chill");
 
     return food;
   },
   makeCustomer: function() {
-    var customer = game.add.sprite(-100, game.height - CUSTOMER_SIZE);
+    var customer = game.add.sprite(-CUSTOMER_SIZE * 1.5, game.height - CUSTOMER_SIZE * 2.15);
 
     // state
     customer.state = {foodTypes: [], thoughtBubble: null, foodThoughts: [], sick: false};
@@ -251,14 +256,10 @@ var Play = {
       customer.state.foodTypes.push(foodType);
     }
     // graphics
-    var motoBody = game.add.sprite(0, 0, "Sprites");
-    motoBody.animations.add("drive", ["MotorcycleBody_1.png", "MotorcycleBody_2.png", "MotorcycleBody_3.png", "MotorcycleBody_2.png"], 15, true);
-    motoBody.play("drive");
-    var motoRider = game.add.sprite(0, 0, "Sprites");
-    motoRider.animations.add("drive", ["MotorcycleRider_1.png", "MotorcycleRider_2.png", "MotorcycleRider_3.png", "MotorcycleRider_2.png"], 25, true);
-    motoRider.play("drive");
-    var motoFront = game.add.sprite(0, 0, "Sprites", "MotorcycleDash_1.png");
-    var thoughtBubble = game.add.sprite(100, -10, "Sprites", "FireAirborne_1.png");
+    var body = game.add.sprite(0, 0, "Sprites");
+    body.animations.add("walk", ["Customer_Bunny_Walk_1.png"], 15, true);
+    body.play("walk");
+    var thoughtBubble = game.add.sprite(60, -130, "Sprites", "Though_Bubble_1.png");
     customer.state.thoughtBubble = thoughtBubble;
     for (i = 0; i < customer.state.foodTypes.length; i ++) {
       var foodThought = this.makeFoodSprite(customer.state.foodTypes[i]);
@@ -267,15 +268,15 @@ var Play = {
       customer.state.foodThoughts.push(foodThought);
       // TODO: spread'em out
     }
-    customer.addChild(motoBody);
-    customer.addChild(motoRider);
-    customer.addChild(motoFront);
+    customer.addChild(body);
     customer.addChild(thoughtBubble);
 
     // physics
     game.physics.enable(customer, Phaser.Physics.ARCADE);
-    customer.body.width = 124;
-    customer.body.height = 96;
+    customer.body.width = 240;
+    customer.body.height = 200;
+
+    this.customersGroup.add(customer);
 
     return customer;
   }
