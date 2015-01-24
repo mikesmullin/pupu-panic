@@ -6,7 +6,8 @@ var Play = {
   },
   create: function() {
     var _this = this;
-    this.foodItems = game.add.group();
+
+    // state vars
     this.numCustomerPositions = 0;
     this.customerPositions = {};
     this.customers = [];
@@ -14,10 +15,14 @@ var Play = {
     this.displayCash = 0;
     this.cashGoal = 0;
     this.timer = 0;
-
+    this.foodTypes = [];
+    this.maxFoodDepth = 1;
+    
+    // state components
     this.scoreText = game.add.text(this.game.width - 150, 15, "Cash: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
     this.timerText = game.add.text(10, 15, "Time: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
-
+    this.foodItems = game.add.group();
+    
     this.loadLevel();
 
     // hacky sweet move tracking
@@ -99,6 +104,7 @@ var Play = {
     this.numCustomerPositions = 3;
     // add items to scrollable list
     var numFoodItems = 15;
+    this.foodTypes = [0, 1, 2];
     for (var i = 0; i < numFoodItems; i ++) {
       var food = this.makeFood();
       food.position.x = game.width / 2 - FOOD_ITEM_SIZE * numFoodItems / 2 + i * FOOD_ITEM_SIZE;
@@ -111,11 +117,13 @@ var Play = {
   },
   makeFood: function() {
     var _this = this;
-    var catNum = Math.floor(Math.random() * 3) + 1;
-    var food = game.add.sprite(0, game.height - FOOD_ITEM_SIZE, "Sprites");
-    food.state = {originalX: -1, originalY: -1};
-    food.animations.add("hop", ["Cat" + catNum + "_1.png", "Cat" + catNum + "_2.png"], 10, true);
-    food.play("hop");
+    var foodType = this.foodTypes[Math.floor(Math.random() * this.foodTypes.length)];
+    var food = this.makeFoodSprite(foodType, 0, game.height - FOOD_ITEM_SIZE);
+
+    // set state
+    food.state = {originalX: -1, originalY: -1, foodType: foodType};
+
+    // drag and drop
     food.inputEnabled = true;
     food.input.enableDrag(false);
     food.events.onDragStart.add(function() {
@@ -125,10 +133,28 @@ var Play = {
     food.events.onDragStop.add(function() {
       // see if food landed on animal head. If it didn't, put it back
       var eaten = false;
+      var sick = true;
       for (var i = 0; i < this.customers.length; i ++) {
         var customer = this.customers[i];
         game.physics.arcade.overlap(food, customer, function() {
+          if (customer.state.sick) {
+            return;
+          }
           eaten = true;
+          for (var j = customer.state.foodTypes.length - 1; j >= 0; j --) {
+            var foodType = customer.state.foodTypes[j];
+            if (foodType === food.state.foodType) {
+              sick = false;
+              break;
+            }
+          }
+          if (sick) {
+            customer.state.foodTypes = [];
+            customer.state.sick = true;
+          }
+          else {
+            customer.state.foodTypes.splice(j, 1);
+          }
         });
         if (eaten) {
           break;
@@ -136,35 +162,46 @@ var Play = {
       }
 
       if (eaten) {
-        // remove customer from position and array
-        for (i = this.customers.length; i >= 0; i --) {
-          if (this.customers[i] === customer) {
-            this.customers.splice(i, 1);
+        // fade out food that was eaten and thought bubble if last piece
+        if (sick || !customer.state.foodTypes.length) {
+          game.add.tween(customer.state.thoughtBubble)
+          .to({alpha: 0}, 500)
+          .start();
+        }
+        if (sick) {
+          // TODO: play sick face
+        }
+
+        if (customer.state.foodTypes.length === 0 && !sick) {
+          // remove customer from position and array
+          for (i = this.customers.length; i >= 0; i --) {
+            if (this.customers[i] === customer) {
+              this.customers.splice(i, 1);
+            }
           }
-        }
-        for (i = 0; i < this.numCustomerPositions; i ++) {
-          if (this.customerPositions[i] === customer) {
-            this.customerPositions[i] = null;
+          for (i = 0; i < this.numCustomerPositions; i ++) {
+            if (this.customerPositions[i] === customer) {
+              this.customerPositions[i] = null;
+            }
           }
+
+          // send customer off screen
+          var distance = game.width - customer.position.x;
+          game.add.tween(customer)
+          .to({x: game.width}, distance * 3.3)
+          .start();
+
+          // TODO: make a cash particle
+          var cashWon = Math.random() * 1 + 1;
+          this.cash += cashWon;
+          if (this.cash >= this.cashGoal) {
+            // YOU WIN
+            console.log("YOU WIN");
+          }
+          game.add.tween(this)
+          .to({displayCash: this.cash}, 1000)
+          .start();
         }
-
-        // send customer off screen
-        var distance = game.width - customer.position.x;
-        game.add.tween(customer)
-        .to({x: game.width}, distance * 3.3)
-        .start();
-
-        var cashWon = Math.random() * 1 + 1;
-        this.cash += cashWon;
-        if (this.cash >= this.cashGoal) {
-          // YOU WIN
-          console.log("YOU WIN");
-        }
-        game.add.tween(this)
-        .to({displayCash: this.cash}, 1000)
-        .start();
-
-        // TODO: make a cash particle
 
         // add new piece of food
         var replacementFood = this.makeFood();
@@ -190,21 +227,55 @@ var Play = {
 
     return food; 
   },
+  makeFoodSprite: function(foodType, x, y) {
+    var food = game.add.sprite(x, y, "Sprites");
+    
+    // set animation
+    switch (foodType) {
+      case 0: food.animations.add("chill", ["Cat1_1.png"], 30, true); break;
+      case 1: food.animations.add("chill", ["Cat2_1.png"], 30, true); break;
+      case 2: food.animations.add("chill", ["Cat3_1.png"], 30, true); break;
+    }
+    food.play("chill");
+
+    return food;
+  },
   makeCustomer: function() {
     var customer = game.add.sprite(-100, game.height - CUSTOMER_SIZE);
-    game.physics.enable(customer, Phaser.Physics.ARCADE);
-    customer.body.width = 124;
-    customer.body.height = 96;
-    var motoBody = this.game.add.sprite(0, 0, "Sprites");
+
+    // state
+    customer.state = {foodTypes: [], thoughtBubble: null, foodThoughts: [], sick: false};
+    var foodDepth = Math.ceil(Math.random() * this.maxFoodDepth);
+    for (var i = 0; i < foodDepth; i ++) {
+      var foodType = this.foodTypes[Math.floor(Math.random() * this.foodTypes.length)];
+      customer.state.foodTypes.push(foodType);
+    }
+    // graphics
+    var motoBody = game.add.sprite(0, 0, "Sprites");
     motoBody.animations.add("drive", ["MotorcycleBody_1.png", "MotorcycleBody_2.png", "MotorcycleBody_3.png", "MotorcycleBody_2.png"], 15, true);
     motoBody.play("drive");
-    var motoRider = this.game.add.sprite(0, 0, "Sprites");
+    var motoRider = game.add.sprite(0, 0, "Sprites");
     motoRider.animations.add("drive", ["MotorcycleRider_1.png", "MotorcycleRider_2.png", "MotorcycleRider_3.png", "MotorcycleRider_2.png"], 25, true);
     motoRider.play("drive");
-    var motoFront = this.game.add.sprite(0, 0, "Sprites", "MotorcycleDash_1.png");
+    var motoFront = game.add.sprite(0, 0, "Sprites", "MotorcycleDash_1.png");
+    var thoughtBubble = game.add.sprite(100, -10, "Sprites", "FireAirborne_1.png");
+    customer.state.thoughtBubble = thoughtBubble;
+    for (i = 0; i < customer.state.foodTypes.length; i ++) {
+      var foodThought = this.makeFoodSprite(customer.state.foodTypes[i]);
+      foodThought.state = {foodType: customer.state.foodTypes[i]};
+      thoughtBubble.addChild(foodThought);
+      customer.state.foodThoughts.push(foodThought);
+      // TODO: spread'em out
+    }
     customer.addChild(motoBody);
     customer.addChild(motoRider);
     customer.addChild(motoFront);
+    customer.addChild(thoughtBubble);
+
+    // physics
+    game.physics.enable(customer, Phaser.Physics.ARCADE);
+    customer.body.width = 124;
+    customer.body.height = 96;
 
     return customer;
   }
