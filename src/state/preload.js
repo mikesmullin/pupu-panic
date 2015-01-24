@@ -7,7 +7,7 @@ var Preload = {
     game.load.atlas("Sprites", "assets/Pupu_Assets.png", "assets/Pupu_Assets.json", null, Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.audio("Music", ["assets/MegaBlaster.mp3", "assets/MegaBlaster.ogg"]);
 
-    game.load.audio("Music", ["assets/MegaBlaster.mp3", "assets/MegaBlaster.ogg"]);
+    game.load.audio("TitleMusic", ["assets/Title_Music_mix.mp3", "assets/Title_Music_mix.ogg"]);
     
     game.load.audio("ButtonClick", ["assets/Button_Click_1.mp3", "assets/Button_Click_1.ogg"]);
     game.load.audio("EatingFood", ["assets/Eating_Food_1.mp3", "assets/Eating_Food_1.ogg"]);
@@ -24,9 +24,8 @@ var Preload = {
   },
   create: function() {
     this.game.state.start("Title");
-    var music = game.add.audio("Music", 0.7, true);
-    // so sick of this music
-    //music.play();
+    var music = game.add.audio("TitleMusic", 1.0, true);
+    music.play();
   },
   update: function() {
   },
