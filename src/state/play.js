@@ -13,8 +13,10 @@ var Play = {
     this.cash = 0;
     this.displayCash = 0;
     this.cashGoal = 0;
+    this.timer = 0;
 
     this.scoreText = game.add.text(this.game.width - 150, 15, "Cash: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
+    this.timerText = game.add.text(10, 15, "Time: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
 
     this.loadLevel();
 
@@ -62,6 +64,11 @@ var Play = {
       this.scoreText.text = "Cash: " + this.displayCash.toFixed(2);
     }
 
+    this.timer -= .01;
+    this.timerText.text = "Time: " + this.timer.toFixed(2);
+    if (this.timer <= 0) {
+      console.log("YOU LOSE");
+    }
     
     // scroll the food items with pointer
     // console.log(game.input.activePointer.movementX);
@@ -88,6 +95,7 @@ var Play = {
   },
   loadLevel: function() {
     this.cashGoal = 50;
+    this.timer = 100;
     this.numCustomerPositions = 3;
     // add items to scrollable list
     var numFoodItems = 15;
