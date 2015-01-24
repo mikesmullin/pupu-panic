@@ -1,0 +1,18 @@
+sound efects[
+
+picking up food sound effect
+button click
+eating food sound effect
+money sound (Cha ching) (negative sound)
+running sound effect
+door open/close for porta-potty
+you win! (yay)
+you loose
+janitor noise
+scrollbar sfx
+diarhrhea sound (reconigition of need to go bathroom bad) (uh oh!)
+
+
+music
+title music
+in-game music
