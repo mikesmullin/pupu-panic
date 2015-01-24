@@ -187,12 +187,7 @@ var Play = {
             }
           }
           if (sick) {
-            customer.state.foodTypes = [];
-            customer.state.sick = true;
-            customer.state.jumpTween.stop();
-            customer.state.scaleStartY = customer.y;
-            customer.inputEnabled = true;
-            customer.input.enableDrag(false);
+            customer.state.onBecomeSick();
           }
           else {
             customer.state.foodTypes.splice(j, 1);
@@ -216,23 +211,8 @@ var Play = {
         }
 
         if (customer.state.foodTypes.length === 0 && !sick) {
-          // remove customer from position and array
-          for (i = this.customers.length; i >= 0; i --) {
-            if (this.customers[i] === customer) {
-              this.customers.splice(i, 1);
-            }
-          }
-          for (i = 0; i < this.numCustomerPositions; i ++) {
-            if (this.customerPositions[i] === customer) {
-              this.customerPositions[i] = null;
-            }
-          }
-
-          // send customer off screen
-          var distance = game.width - customer.position.x;
-          game.add.tween(customer)
-          .to({x: game.width}, distance * 3.3)
-          .start();
+          // send customer off screen to right
+          customer.state.leaveScene(1);
 
           // TODO: make a cash particle
           var cashWon = Math.random() * 1 + 1;
@@ -286,6 +266,7 @@ var Play = {
     return food;
   },
   makeCustomer: function(type) {
+    var _this = this;
     var customer = game.add.sprite(-CUSTOMER_SIZE * 1.5, game.height - CUSTOMER_SIZE * 2.15);
 
     // state
@@ -296,6 +277,7 @@ var Play = {
       sick: false,
       jumpTween: null,
       scaleStartY: -1,
+      body: null
     };
     // var foodDepth = Math.ceil(Math.random() * this.maxFoodDepth);
     // for (var i = 0; i < foodDepth; i ++) {
@@ -304,6 +286,7 @@ var Play = {
     // }
     // graphics
     var body = game.add.sprite(0, 0, "Sprites");
+    customer.state.body = body;
     switch (type) {
       case 0:
         body.animations.add("walk", ["Customer_Bunny_Walk_1.png"], 15, true);
@@ -335,6 +318,42 @@ var Play = {
 
     this.customerGroup.add(customer);
 
+    customer.state.onBecomeSick = function() {
+      customer.state.foodTypes = [];
+      customer.state.sick = true;
+      customer.state.jumpTween.stop();
+      customer.state.scaleStartY = customer.y;
+      customer.inputEnabled = true;
+      customer.input.enableDrag(false);
+      customer.events.onDragStop.add(function() {
+        for (var i=0; i<_this.pottyGroup.children.length; i++) {
+          var potty = _this.pottyGroup.getChildAt(i);
+          game.physics.arcade.overlap(customer, potty, function() {
+            potty.state.occupy(customer);
+          });
+        }
+      });
+    };
+
+    customer.state.leaveScene = function (direction) {
+      // remove customer from position and array
+      for (i = _this.customers.length; i >= 0; i --) {
+        if (_this.customers[i] === customer) {
+          _this.customers.splice(i, 1);
+        }
+      }
+      for (i = 0; i < _this.numCustomerPositions; i ++) {
+        if (_this.customerPositions[i] === customer) {
+          _this.customerPositions[i] = null;
+        }
+      }
+
+      var distance = game.width - customer.position.x;
+      game.add.tween(customer)
+      .to({x: game.width}, distance * 3.3 * direction)
+      .start();
+    };
+
     return customer;
   },
   makePotty: function(x, y) {
@@ -346,6 +365,29 @@ var Play = {
     pottyDoor.animations.add("occupied", ["Potty_Taken_1.png"], 15, true);
     pottyDoor.play("unoccupied");
     potty.addChild(pottyDoor);
+
+    // physics
+    game.physics.enable(potty, Phaser.Physics.ARCADE);
+    potty.body.width = 162;
+    potty.body.height = 286;
+
+    potty.state.occupy = function(customer) {
+      if (potty.state.occupied) return;
+      customer.visible = false;
+      potty.state.occupied = true;
+      potty.state.door.play("occupied");
+      setTimeout(function() { potty.state.unoccupy(customer) }, 3*1000);
+    };
+
+    potty.state.unoccupy = function(customer) {
+      potty.state.occupied = false;
+      customer.visible = true;
+      potty.state.door.play("unoccupied");
+      customer.state.body.play("walk"); // TODO: relieved face?
+      var toY = customer.y - 10;
+      customer.state.jumpTween = game.add.tween(customer).to({y: toY}, Math.random() * 100 + 100, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
+      customer.state.leaveScene(1);
+    };
 
     return potty;
   }
