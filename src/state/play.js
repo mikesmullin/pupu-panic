@@ -20,7 +20,8 @@ var Play = {
     
     // ui components
     this.game.add.sprite(0, 0, "Sprites", "Background_1.png");
-    this.customersGroup = game.add.group();
+    this.pottyGroup = game.add.group();
+    this.customerGroup = game.add.group();
     this.game.add.sprite(0, game.height - 160, "Sprites", "Table_1.png");
     this.foodItems = game.add.group();
     this.scoreText = game.add.text(this.game.width - 150, 15, "Cash: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
@@ -102,6 +103,18 @@ var Play = {
         }
       }
     }
+
+    this.customers.forEach(function(customer) {
+      if (customer.state.sick) {
+        customer.scale.x = customer.scale.y = customer.y / customer.state.scaleStartY * .75 + .25;
+        if (customer.scale.x > 1) {
+          customer.scale.x = customer.scale.y = 1;
+        }
+        if (customer.scale.x < .5) {
+          customer.scale.x = customer.scale.y = .5;
+        }
+      }
+    });
   },
   render: function() {
   },
@@ -115,6 +128,11 @@ var Play = {
     for (var i = 0; i < numFoodItems; i ++) {
       var food = this.makeFood();
       food.position.x = game.width / 2 - FOOD_ITEM_SIZE * numFoodItems / 2 + i * FOOD_ITEM_SIZE;
+    }
+
+    this.numPotties = 4;
+    for (i = 0; i < this.numPotties; i ++) {
+      this.pottyGroup.add(this.makePotty(15 + game.width / this.numPotties * i, 150));
     }
 
     // var food = this.foodItems.getFirstExists(false);
@@ -158,6 +176,8 @@ var Play = {
           if (sick) {
             customer.state.foodTypes = [];
             customer.state.sick = true;
+            customer.state.jumpTween.stop();
+            customer.state.scaleStartY = customer.y;
             customer.inputEnabled = true;
             customer.input.enableDrag(false);
           }
@@ -253,7 +273,7 @@ var Play = {
     var customer = game.add.sprite(-CUSTOMER_SIZE * 1.5, game.height - CUSTOMER_SIZE * 2.15);
 
     // state
-    customer.state = {foodTypes: [], thoughtBubble: null, foodThoughts: [], sick: false, jumpTween: null};
+    customer.state = {foodTypes: [], thoughtBubble: null, foodThoughts: [], sick: false, jumpTween: null, scaleStartY: -1};
     var foodDepth = Math.ceil(Math.random() * this.maxFoodDepth);
     for (var i = 0; i < foodDepth; i ++) {
       var foodType = this.foodTypes[Math.floor(Math.random() * this.foodTypes.length)];
@@ -285,8 +305,20 @@ var Play = {
     customer.body.width = 240;
     customer.body.height = 200;
 
-    this.customersGroup.add(customer);
+    this.customerGroup.add(customer);
 
     return customer;
+  },
+  makePotty: function(x, y) {
+    var potty = game.add.sprite(x, y);
+    potty.state = {occupied: false, door: null};
+    var pottyDoor = game.add.sprite(0, 0, "Sprites");
+    potty.state.door = pottyDoor;
+    pottyDoor.animations.add("unoccupied", ["Potty_Free_1.png"], 15, true);
+    pottyDoor.animations.add("occupied", ["Potty_Taken_1.png"], 15, true);
+    pottyDoor.play("unoccupied");
+    potty.addChild(pottyDoor);
+
+    return potty;
   }
 };
