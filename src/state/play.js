@@ -3,6 +3,7 @@ var CUSTOMER_SIZE = 240;
 
 var Play = {
   preload: function() {
+    game.load.image('mess', 'assets/mess.jpg');
   },
   create: function() {
     var _this = this;
@@ -277,7 +278,10 @@ var Play = {
       sick: false,
       jumpTween: null,
       scaleStartY: -1,
-      body: null
+      body: null,
+      leaveScene: null,
+      messYoself: null,
+      urgeToPurgeTimer: null
     };
     // var foodDepth = Math.ceil(Math.random() * this.maxFoodDepth);
     // for (var i = 0; i < foodDepth; i ++) {
@@ -326,6 +330,14 @@ var Play = {
       customer.inputEnabled = true;
       customer.input.enableDrag(false);
       customer.events.onDragStop.add(function() {
+        customer.y = 200; // align with bottom of potties
+        if (!customer.state.urgeToPurgeTimer) {
+          customer.state.urgeToPurgeTimer = setTimeout(function() {
+            customer.input.disableDrag();
+            customer.input.stop();
+            customer.state.messYoself();
+          }, 3000);
+        }
         for (var i=0; i<_this.pottyGroup.children.length; i++) {
           var potty = _this.pottyGroup.getChildAt(i);
           game.physics.arcade.overlap(customer, potty, function() {
@@ -354,6 +366,12 @@ var Play = {
       .start();
     };
 
+    customer.state.messYoself = function () {
+      _this.makeMess(customer.x - (customer.width /2), 
+        customer.y + customer.height + 100);
+      customer.state.leaveScene(1);
+    };
+
     return customer;
   },
   makePotty: function(x, y) {
@@ -373,6 +391,7 @@ var Play = {
 
     potty.state.occupy = function(customer) {
       if (potty.state.occupied) return;
+      clearTimeout(customer.state.urgeToPurgeTimer);
       customer.visible = false;
       potty.state.occupied = true;
       potty.state.door.play("occupied");
@@ -390,5 +409,10 @@ var Play = {
     };
 
     return potty;
+  },
+  makeMess: function(x,y) {
+    var mess = game.add.sprite(x,y,'mess');
+    mess.scale.setTo(0.25, 0.25);
+    return mess;
   }
 };
