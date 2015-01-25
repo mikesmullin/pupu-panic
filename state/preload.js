@@ -23,10 +23,15 @@ var Preload = {
     game.load.audio("ScrollBarClick", ["assets/Scroll_bar_Click_1.mp3", "assets/Scroll_bar_Click_1.ogg"]);
     game.load.audio("UhOh", ["assets/uh_oh_1.mp3", "assets/uh_oh_1.ogg"]);
     game.load.audio("YouWin", ["assets/You_Win_1.mp3", "assets/You_Win_1.ogg"]);
+
+    game.load.audio("Gummibar", ["assets/gummibar_funny_dj.mp3", "assets/gummibar_funny_dj.ogg"]);
   },
   create: function() {
     game.globals.playTitleMusic();
-    game.state.start("Title");
+
+    // this will be the first page displayed on load
+    //game.state.start("Title");
+    game.state.start("Credits");
   },
   update: function() {
   },
