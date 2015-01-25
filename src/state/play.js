@@ -127,19 +127,19 @@ var Play = {
   render: function() {
   },
   loadLevel: function() {
-    this.cashGoal = 50;
-    this.timer = 100;
-    this.numCustomerPositions = 3;
+    this.cashGoal = game.state.cashGoal;
+    this.timer = game.state.timer
+    this.numCustomerPositions = game.state.numCustomerPositions;
     // add items to scrollable list
-    var numFoodItems = 8;
-    this.customerTypes = [0];
-    this.foodTypes = [0, 1, 2, 3, 4];
+    var numFoodItems = game.state.numFoodItems;
+    this.customerTypes = game.state.customerTypes;
+    this.foodTypes = game.state.foodTypes;
     for (var i = 0; i < numFoodItems; i ++) {
       var food = this.makeFood();
       food.position.x = game.width / 2 - FOOD_ITEM_SIZE * numFoodItems / 2 + i * FOOD_ITEM_SIZE;
     }
 
-    this.numPotties = 4;
+    this.numPotties = game.state.numPotties;
     for (i = 0; i < this.numPotties; i ++) {
       this.pottyGroup.add(this.makePotty(15 + game.width / this.numPotties * i, 150));
     }
