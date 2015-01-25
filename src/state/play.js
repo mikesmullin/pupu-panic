@@ -555,6 +555,7 @@ var Play = {
     if (game.state.ended) return;
     game.state.ended = true;
     console.log("YOU WIN");
+    localStorage.setItem("highestLevelBeat", game.state.level + "");
     this.winSound.play();
     while (this.customers.length) {
       this.customers[0].state.leaveScene(1);

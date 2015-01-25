@@ -42,3 +42,6 @@ game.state.add("Play", Play);
 game.state.start("Boot");
 
 var highScore = 0;
+
+var highestLevelBeat = parseInt(localStorage.getItem("highestLevelBeat"));
+highestLevelBeat = highestLevelBeat || 0;
