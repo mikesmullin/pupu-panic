@@ -466,12 +466,18 @@ var Play = {
   },
   makePotty: function(x, y) {
     var potty = game.add.sprite(x, y);
-    potty.state = {occupied: false, door: null};
+    potty.state = {occupied: false, door: null, spinner: null};
+    
     var pottyDoor = game.add.sprite(0, 0, "Sprites");
     potty.state.door = pottyDoor;
     pottyDoor.animations.add("unoccupied", ["Potty_1.png"], 15, true);
-    pottyDoor.animations.add("occupied", ["Potty_Alert_1.png"], 15, true);
     pottyDoor.play("unoccupied");
+
+    var pottySpinner = game.add.sprite(pottyDoor.width / 2, 72, "Sprites", "Potty_Alert_1.png");
+    potty.state.spinner = pottySpinner;
+    pottySpinner.anchor.set(.5, .5);
+    
+    potty.addChild(pottySpinner);
     potty.addChild(pottyDoor);
 
     // physics
@@ -486,6 +492,10 @@ var Play = {
       potty.state.occupied = true;
       potty.state.door.play("occupied");
       setTimeout(function() { potty.state.unoccupy(customer) }, 3*1000);
+
+      game.add.tween(potty.state.spinner)
+      .to({rotation: Math.PI}, 750, Phaser.Easing.Elastic.Out)
+      .start();
     };
 
     potty.state.unoccupy = function(customer) {
@@ -496,6 +506,10 @@ var Play = {
       var toY = customer.y - 10;
       customer.state.jumpTween = game.add.tween(customer).to({y: toY}, Math.random() * 100 + 100, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
       customer.state.leaveScene(1);
+
+      game.add.tween(potty.state.spinner)
+      .to({rotation: 0}, 750, Phaser.Easing.Elastic.Out)
+      .start();
     };
 
     return potty;
