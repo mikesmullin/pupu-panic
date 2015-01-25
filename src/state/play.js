@@ -18,10 +18,20 @@ var Play = {
     this.timer = 0;
     this.foodTypes = [];
     this.maxFoodDepth = 1;
+    this.cleaningUpPoop = false; // is the janitor currently cleaning up poop?
     
     // ui components
     this.game.add.sprite(0, 0, "Sprites", "Background_1.png");
     this.pottyGroup = game.add.group();
+    this.poopGroup = game.add.group();
+    
+    this.janitor = game.add.sprite(game.width + 200, 140, "Sprites");
+    this.janitor.animations.add("walk", ["Janitor_Walk_1.png", "Janitor_Walk_2.png"], 2.5, true);
+    this.janitor.animations.add("mop", ["Janitor_Mop_1.png", "Janitor_Mop_2.png"], 1.5, true);
+    this.janitor.scale.set(.6, .6);
+    this.janitor.anchor.set(.5, .5);
+    this.janitor.play("walk");
+    
     this.customerGroup = game.add.group();
     this.game.add.sprite(0, game.height - 160, "Sprites", "Table_1.png");
     this.foodItems = game.add.group();
@@ -98,7 +108,7 @@ var Play = {
         if (!this.customerPositions[i]) {
           var padding = 20;
           var destX = -30 + (game.width + 40) / this.numCustomerPositions * i;
-          var distance = destX - customer.position.x;
+          var distance = Math.abs(destX - customer.position.x);
           this.customerPositions[i] = customer;
           game.add.tween(customer)
           .to({x: destX}, distance * 2.1)
@@ -123,6 +133,50 @@ var Play = {
         }
       }
     });
+
+    // clean up the poop
+    if (this.poopGroup.children.length && !this.cleaningUpPoop) {
+      this.cleaningUpPoop = true;
+
+      // send out the janitor to clean the mess
+      var targetMess = this.poopGroup.children[0];
+      if (targetMess.x < this.janitor.x) {
+        this.janitor.scale.x = -.6;
+      }
+      else {
+        this.janitor.scale.x = .6;
+      }
+      // TODO: play grumpy janitor sound
+      this.janitor.y = targetMess.y - 10;
+      distance = Math.abs(targetMess.x - this.janitor.x);
+      var tween1 = game.add.tween(this.janitor)
+      .to({x: targetMess.x + targetMess.width / 2}, distance * 4.5)
+      .start();
+      tween1.onComplete.add(function() {
+        _this.janitor.play("mop");
+        var tween2 = game.add.tween(targetMess)
+        .to({alpha: 0}, 4500)
+        .start();
+        tween2.onComplete.add(function() {
+          _this.cash -= 5;
+          _this.poopGroup.remove(targetMess);
+          _this.cleaningUpPoop = false;
+          // TODO: play cash loss sound
+          _this.janitor.play("walk");
+          destX = Math.random() > .5 ? game.width + 200 : -200;
+          if (destX < _this.janitor.x) {
+            _this.janitor.scale.x = -.6;
+          }
+          else {
+            _this.janitor.scale.x = .6;
+          }
+          distance = Math.abs(destX - _this.janitor.x);
+          var tween3 = game.add.tween(_this.janitor)
+          .to({x: destX}, distance * 4.5)
+          .start();
+        });
+      });
+    }
   },
   render: function() {
   },
@@ -432,6 +486,8 @@ var Play = {
   makeMess: function(x,y) {
     var mess = game.add.sprite(x,y,'mess');
     mess.scale.setTo(0.25, 0.25);
+    this.poopGroup.add(mess);
+
     return mess;
   }
 };
