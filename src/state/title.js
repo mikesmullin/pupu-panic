@@ -45,7 +45,7 @@ var Title = {
     .to({x: 1, y: 1}, 500, Phaser.Easing.Elastic.Out)
     .delay(2000)
     .start();
-    
+
     var creditsButton = this.game.add.sprite(game.width / 2, game.height / 2 + 280, "ExtraSprites", "Title_Button_Credits_1.png");
     creditsButton.scale.setTo(0);
     creditsButton.anchor.setTo(0.5, 0.5);

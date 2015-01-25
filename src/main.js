@@ -22,7 +22,7 @@ game.globals = {
         game.globals.titleMusic.fadeOut(500);
         game.globals.titleMusic = null;
       }
-      
+
       game.globals.levelIntroMusic = game.add.audio("LevelMusicIntro", 0.33, false);
       game.globals.levelIntroMusic.onStop.add(function() {
         game.globals.levelLoopMusic.play();

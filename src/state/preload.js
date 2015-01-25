@@ -10,7 +10,7 @@ var Preload = {
     game.load.audio("TitleMusic", ["assets/Title_Music_mix.mp3", "assets/Title_Music_mix.ogg"]);
     game.load.audio("LevelMusicIntro", ["assets/lvl_Intro_1.mp3", "assets/lvl_Intro_1.ogg"]);
     game.load.audio("LevelMusicLoop", ["assets/lvl_Loop_1.mp3", "assets/lvl_Loop_1.ogg"]);
-    
+
     game.load.audio("ButtonClick", ["assets/Button_Click_1.mp3", "assets/Button_Click_1.ogg"]);
     game.load.audio("EatingFood", ["assets/Eating_Food_1.mp3", "assets/Eating_Food_1.ogg"]);
     game.load.audio("FindingPotty", ["assets/Finding_Potty.mp3", "assets/Finding_Potty.ogg"]);
