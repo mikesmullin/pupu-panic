@@ -43,6 +43,9 @@ var Play = {
     this.pickUpFoodSound = game.add.audio("PickingUpFood", 1.0);
     this.sickSound = game.add.audio("UhOh", 1.0);
     this.winSound = game.add.audio("YouWin", 1.0);
+    this.messSound = game.add.audio("MessSound", 1.0);
+    this.janitorSound = game.add.audio("JanitorSound", 4.0);
+    this.pottyDoorSound = game.add.audio("PortaPottyOpen", 1.0);
 
     this.loadLevel();
 
@@ -145,13 +148,13 @@ var Play = {
       else {
         this.janitor.scale.x = 1;
       }
-      // TODO: play grumpy janitor sound
       this.janitor.y = targetMess.y - 10;
       distance = Math.abs(targetMess.x - this.janitor.x);
       var tween1 = game.add.tween(this.janitor)
       .to({x: targetMess.x + targetMess.width / 2}, distance * 4.5)
       .start();
       tween1.onComplete.add(function() {
+        _this.janitorSound.play();
         _this.janitor.play("mop");
         var tween2 = game.add.tween(targetMess)
         .to({alpha: 0}, 4500)
@@ -458,6 +461,7 @@ var Play = {
     };
 
     customer.state.messYoself = function () {
+      _this.messSound.play();
       _this.makeMess(customer.x - (customer.width /2), 
         customer.y + customer.height + 100);
       customer.state.leaveScene(1);
@@ -466,6 +470,7 @@ var Play = {
     return customer;
   },
   makePotty: function(x, y) {
+    var _this = this;
     var potty = game.add.sprite(x, y);
     potty.state = {occupied: false, door: null, spinner: null};
     
@@ -491,6 +496,7 @@ var Play = {
       clearTimeout(customer.state.urgeToPurgeTimer);
       customer.visible = false;
       potty.state.occupied = true;
+      _this.pottyDoorSound.play();
       potty.state.door.play("occupied");
       setTimeout(function() { potty.state.unoccupy(customer) }, 3*1000);
 
@@ -502,6 +508,7 @@ var Play = {
     potty.state.unoccupy = function(customer) {
       potty.state.occupied = false;
       customer.visible = true;
+      _this.pottyDoorSound.play();
       potty.state.door.play("unoccupied");
       customer.state.body.play("walk"); // TODO: relieved face?
       var toY = customer.y - 10;
