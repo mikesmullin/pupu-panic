@@ -9,7 +9,9 @@ var LevelSelect = {
   preload: function() {
   },
   create: function() {
+    var _this = this;
     this.game.add.sprite(0, 0, "Sprites", "Background_Gameplay_1.png");
+    this.sfxButtonClick = game.add.audio("ButtonClick", 1.0);
 
     for (var i=0; i<LEVELS; i++) {
       var unit = PADDING + BUTTON_SIZE;
@@ -45,6 +47,7 @@ var LevelSelect = {
           default:
             return;
         }
+        _this.sfxButtonClick.play();
         game.state.start("Play");
       }; }(i)));
     }
@@ -56,6 +59,7 @@ var LevelSelect = {
       "Sprites", "Food_CarrotBun_Good_1.png");
     page_prev.inputEnabled = true;
     page_prev.events.onInputDown.add(function() {
+      _this.sfxButtonClick.play();
       game.state.start("Title");
     });
     page_next = this.game.add.sprite(
@@ -65,6 +69,7 @@ var LevelSelect = {
     page_next.inputEnabled = true;
     page_next.events.onInputDown.add(function() {
       // tween
+      _this.sfxButtonClick.play();
       alert('coming soon; more pages of levels');
     });
   },
