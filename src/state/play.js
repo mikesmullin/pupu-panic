@@ -48,8 +48,8 @@ var Play = {
     this.moneyLostSound = game.add.audio("MoneyLost", 1.0);
 
     this.loadLevel();
-    this.timerText = game.add.text(10, 15, "Time: " + this.displayCash, {fill: "#cc0000", font: "30px Impact"});
-    this.scoreText = game.add.text(this.game.width - 250, 15, "Cash: " + this.displayCash + " / " + this.cashGoal.toFixed(2), {fill: "#cc0000", font: "30px Impact"});
+    this.timerText = game.add.text(10, 15, "Time: " + this.displayCash, {fill: "#cc0000", font: "50px Impact"});
+    this.scoreText = game.add.text(this.game.width - 360, 15, "Cash: " + this.displayCash + " / " + this.cashGoal.toFixed(2), {fill: "#cc0000", font: "50px Impact"});
 
     // hacky sweet move tracking
     var lastX = -1;
@@ -225,11 +225,13 @@ var Play = {
   },
   makeFood: function() {
     var _this = this;
-    var foodType = this.foodTypes[Math.floor(Math.random() * this.foodTypes.length)];
-    var food = this.makeFoodSprite(foodType, Math.random() > .8 ? true : false, 0, game.height - FOOD_ITEM_SIZE);
+    var _the_food = game.state.makeFood();
+    var foodType = this.foodTypes[_the_food.type];
+    var food = this.makeFoodSprite(foodType, _the_food.rotten, 0, game.height - FOOD_ITEM_SIZE);
 
     // set state
-    food.state = {originalX: -1, originalY: -1, foodType: foodType};
+    food.state = {originalX: -1, originalY: -1, foodType: foodType,
+      rotten: _the_food.rotten };
 
     // drag and drop
     food.inputEnabled = true;
@@ -260,7 +262,7 @@ var Play = {
           for (var j = customer.state.foodTypes.length - 1; j >= 0; j --) {
             var foodType = customer.state.foodTypes[j];
             if (foodType === food.state.foodType) {
-              sick = false;
+              sick = food.state.rotten;
               break;
             }
           }
@@ -291,21 +293,22 @@ var Play = {
           customer.state.face.play('happy');
         }
 
-        var cashWon = game.state.foodValue(foodEaten.state.type);
-        // TODO: make a cash particle
-        this.cash += cashWon;
-        this.moneyGainedSound.play();
-        if (this.cash >= this.cashGoal) {
-          this.playerWon();
-        }
-        else if (this.cash < 0) {
-          this.playerLost();
-        }
-        game.add.tween(this)
-        .to({displayCash: this.cash}, 250)
-        .start();
 
         if (customer.state.foodTypes.length === 0 && !sick) {
+          var cashWon = game.state.foodValue(foodEaten.state.type);
+          // TODO: make a cash particle
+          this.cash += cashWon;
+          this.moneyGainedSound.play();
+          if (this.cash >= this.cashGoal) {
+            this.playerWon();
+          }
+          else if (this.cash < 0) {
+            this.playerLost();
+          }
+          game.add.tween(this)
+          .to({displayCash: this.cash}, 250)
+          .start();
+
           // send customer off screen to right
           customer.state.leaveScene(1);
         }
