@@ -1,5 +1,6 @@
 var Preload = {
   preload: function() {
+    game.background = game.add.sprite(game.width / 2 - 50, game.height / 2 - 40, "Loading");
     var preloadBar = game.add.sprite(0, game.height / 2 - 10, "PreloadBar");
     game.load.setPreloadSprite(preloadBar, 0);
 
@@ -25,6 +26,7 @@ var Preload = {
     game.load.audio("YouWin", ["assets/You_Win_1.mp3", "assets/You_Win_1.ogg"]);
 
     game.load.audio("Gummibar", ["assets/gummibar_funny_dj.mp3", "assets/gummibar_funny_dj.ogg"]);
+
   },
   create: function() {
     game.globals.playTitleMusic();
