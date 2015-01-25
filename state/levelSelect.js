@@ -5,6 +5,10 @@ var BUTTON_SIZE = 200;
 var COLS = 3;
 var page_prev, page_next;
 
+var rand = function(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 var LevelSelect = {
   preload: function() {
   },
@@ -38,14 +42,19 @@ var LevelSelect = {
         game.state.level = i + 1;
         switch (i+1) {
           case 1:
-            // ez pz; just feed carrots fast enough to win
             game.state.cashGoal = 10;
-            game.state.timer = 20;
+            game.state.timer = 30;
             game.state.numCustomerPositions = 2;
             game.state.numFoodItems = 8;
-            game.state.customerTypes = [0];
-            game.state.foodTypes = [0];
-            game.state.numPotties = 0;
+            game.state.customerTypes = [0,2];
+            game.state.foodTypes = [0,2];
+            game.state.numPotties = 1;
+            game.state.makeFood = function() {
+              return {
+                type: Math.floor(Math.random() * game.state.foodTypes.length),
+                rotten: false
+              }
+            }
             game.state.spawnCustomer = function() {
               return Math.random() > .99;
             }
@@ -53,7 +62,7 @@ var LevelSelect = {
               return 10*1000;
             }
             game.state.foodValue = function(foodType) {
-              return 1.20;
+              return 1;
             }
             game.state.janitorCost = 5;
             break;
@@ -61,17 +70,61 @@ var LevelSelect = {
           case 2:
             // a little tricky; you wont have all carrots; some will have to go potty
             game.state.cashGoal = 10;
-            game.state.timer = 20;
-            game.state.numCustomerPositions = 3;
-            game.state.numFoodItems = 8;
-            game.state.customerTypes = [0];
-            game.state.foodTypes = [0, 1, 2, 3, 4];
-            game.state.numPotties = 2;
+            game.state.timer = 25;
+            game.state.numCustomerPositions = 3; // not more than 3
+            game.state.numFoodItems = 8; // requires minimum of 8
+            // 0 - bunny
+            // 1 - cat
+            // 2 - dog
+            // 3 - bird
+            // 4 - frog
+            game.state.customerTypes = [2,1,0];
+            // 0 = bunny food
+            // 1 = cat food
+            // 2 = dog food
+            // 3 = bird food
+            // 4 = frog food
+            game.state.foodTypes = [2,1,0];
+            game.state.numPotties = 1; // not more than 4
+            game.state.makeFood = function() {
+              return {
+                type: Math.floor(Math.random() * game.state.foodTypes.length),
+                rotten: false
+              }
+            }
             game.state.spawnCustomer = function() {
               return true;
             }
             game.state.pottyTime = function(customer) {
-              return 1000 * (9 * Math.random() + 1);
+              return 1000 * (9 * Math.random() + 1); // 1 - 9 sec
+            }
+            game.state.foodValue = function(foodType) {
+              //return Math.random() * 1 + 1; // 1 - 2 cash
+              return 1;
+            }
+            game.state.janitorCost = 5; // -5 cash
+            break;
+
+          case 3:
+            game.state.cashGoal = 10;
+            game.state.timer = 25;
+            game.state.numCustomerPositions = 3;
+            game.state.numFoodItems = 8;
+            game.state.customerTypes = [2,1,0]
+            game.state.foodTypes = [2,1,0]
+            game.state.numPotties = 2;
+            game.state.makeFood = function() {
+              return {
+                type: Math.floor(Math.random() * game.state.foodTypes.length),
+                rotten: Math.floor(Math.random() * 2) > 0
+              }
+            }
+            game.state.spawnCustomer = function() {
+              return true;
+            }
+            game.state.pottyTime = function(customer) {
+              //return 1000 * (9 * Math.random() + 5); // 5 - 14 sec
+              return 1000 * (5 * Math.random() + 1); // 1 - 5 sec
             }
             game.state.foodValue = function(foodType) {
               return Math.random() * 1 + 1;
@@ -79,19 +132,51 @@ var LevelSelect = {
             game.state.janitorCost = 5;
             break;
 
-          case 3:
-            game.state.cashGoal = 30;
-            game.state.timer = 40;
+          case 4:
+            game.state.cashGoal = 10;
+            game.state.timer = 25;
             game.state.numCustomerPositions = 3;
             game.state.numFoodItems = 8;
-            game.state.customerTypes = [0, 1, 2, 3, 4];
-            game.state.foodTypes = [0, 1, 2, 3, 4];
-            game.state.numPotties = 2;
+            game.state.customerTypes = [2,1,0,4]
+            game.state.foodTypes = [2,1,0,4]
+            game.state.numPotties = 3;
+            game.state.makeFood = function() {
+              return {
+                type: Math.floor(Math.random() * game.state.foodTypes.length),
+                rotten: Math.floor(Math.random() * 2) > 0
+              }
+            }
             game.state.spawnCustomer = function() {
               return true;
             }
             game.state.pottyTime = function(customer) {
-              return 1000 * (9 * Math.random() + 5);
+              return 1000 * (5 * Math.random() + 1); // 1 - 5 sec
+            }
+            game.state.foodValue = function(foodType) {
+              return Math.random() * 1 + 1;
+            }
+            game.state.janitorCost = 5;
+            break;
+
+          case 5:
+            game.state.cashGoal = 20;
+            game.state.timer = 33;
+            game.state.numCustomerPositions = 3;
+            game.state.numFoodItems = 8;
+            game.state.customerTypes = [3,1,0,4]
+            game.state.foodTypes = [3,1,0]
+            game.state.numPotties = 3;
+            game.state.makeFood = function() {
+              return {
+                type: Math.floor(Math.random() * game.state.foodTypes.length),
+                rotten: rand(1, 3) == 1
+              }
+            }
+            game.state.spawnCustomer = function() {
+              return true;
+            }
+            game.state.pottyTime = function(customer) {
+              return 1000 * (6 * Math.random() + 3); // 3 - 9 sec
             }
             game.state.foodValue = function(foodType) {
               return Math.random() * 1 + 1;
