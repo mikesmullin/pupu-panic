@@ -23,7 +23,7 @@ var Preload = {
   },
   create: function() {
     this.game.state.start("Title");
-    var music = game.add.audio("TitleMusic", 1.0, true);
+    var music = game.add.audio("TitleMusic", 0.33, true);
     music.play();
   },
   update: function() {
