@@ -93,14 +93,14 @@ var Play = {
     this.timer -= .01;
     this.timerText.text = "Time: " + this.timer.toFixed(2);
     if (this.timer <= 0) {
-      console.log("YOU LOSE");
+      this.playerLost();
     }
     
     // scroll the food items with pointer
     // console.log(game.input.activePointer.movementX);
 
     // make customer and move him to position
-    if (this.customers.length < this.numCustomerPositions && Math.random() > .99) {
+    if (!game.state.ended && this.customers.length < this.numCustomerPositions && Math.random() > .99) {
       var customer = this.makeCustomer(this.customerTypes[Math.floor(Math.random() * this.customerTypes)]);
       this.customers.push(customer);
       for (var i = this.numCustomerPositions - 1; i >= 0; i --) {
@@ -280,9 +280,10 @@ var Play = {
           this.cash += cashWon;
           this.moneyGainedSound.play();
           if (this.cash >= this.cashGoal) {
-            // YOU WIN
-            console.log("YOU WIN");
-            _this.winSound.play();
+            this.playerWon();
+          }
+          else if (this.cash < 0) {
+            this.playerLost();
           }
           game.add.tween(this)
           .to({displayCash: this.cash}, 1000)
@@ -520,5 +521,31 @@ var Play = {
     this.poopGroup.add(mess);
 
     return mess;
+  },
+  playerLost: function() {
+    if (game.state.ended) return;
+    game.state.ended = true; // prevent repeated calls per frame
+    console.log("YOU LOSE");
+    this.sickSound.play();
+    while (this.customers.length) {
+      this.customers[0].state.leaveScene(1);
+    }
+    setTimeout(function() {
+      game.state.ended = false;
+      game.state.start("Title");
+    }, 4000);
+  },
+  playerWon: function() {
+    if (game.state.ended) return;
+    game.state.ended = true;
+    console.log("YOU WIN");
+    this.winSound.play();
+    while (this.customers.length) {
+      this.customers[0].state.leaveScene(1);
+    }
+    setTimeout(function() {
+      game.state.ended = false;
+      game.state.start("LevelSelect");
+    }, 4000);
   }
 };
