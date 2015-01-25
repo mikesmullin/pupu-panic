@@ -32,6 +32,16 @@ var LevelSelect = {
             game.state.customerTypes = [0];
             game.state.foodTypes = [0];
             game.state.numPotties = 0;
+            game.state.spawnCustomer = function() {
+              return Math.random() > .99;
+            }
+            game.state.pottyTime = function() {
+              return 10*1000;
+            }
+            game.state.foodValue = function(foodType) {
+              return 1.20;
+            }
+            game.state.janitorCost = 5;
             break;
 
           case 2:
@@ -41,7 +51,17 @@ var LevelSelect = {
             game.state.numFoodItems = 8;
             game.state.customerTypes = [0];
             game.state.foodTypes = [0, 1, 2, 3, 4];
-            game.state.numPotties = 4;
+            game.state.numPotties = 2;
+            game.state.spawnCustomer = function() {
+              return true;
+            }
+            game.state.pottyTime = function(customer) {
+              return 1000 * (9 * Math.random() + 1);
+            }
+            game.state.foodValue = function(foodType) {
+              return Math.random() * 1 + 1;
+            }
+            game.state.janitorCost = 5;
             break;
 
           default:

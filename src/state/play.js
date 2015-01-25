@@ -34,8 +34,8 @@ var Play = {
     this.customerGroup = game.add.group();
     this.game.add.sprite(0, game.height - 160, "Sprites", "Table_1.png");
     this.foodItems = game.add.group();
-    this.scoreText = game.add.text(this.game.width - 150, 15, "Cash: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
-    this.timerText = game.add.text(10, 15, "Time: " + this.displayCash, {fill: "#CCCCCC", font: "30px Impact"});
+    this.scoreText = game.add.text(this.game.width - 150, 15, "Cash: " + this.displayCash, {fill: "#cc0000", font: "30px Impact"});
+    this.timerText = game.add.text(10, 15, "Time: " + this.displayCash, {fill: "#cc0000", font: "30px Impact"});
     
     // audio
     this.eatSound = game.add.audio("EatingFood", 1.0);
@@ -44,8 +44,9 @@ var Play = {
     this.sickSound = game.add.audio("UhOh", 1.0);
     this.winSound = game.add.audio("YouWin", 1.0);
     this.messSound = game.add.audio("MessSound", 1.0);
-    this.janitorSound = game.add.audio("JanitorSound", 4.0);
+    this.janitorSound = game.add.audio("Janitor", 2.0);
     this.pottyDoorSound = game.add.audio("PortaPottyOpen", 1.0);
+    this.moneyLostSound = game.add.audio("MoneyLost", 1.0);
 
     this.loadLevel();
 
@@ -93,17 +94,19 @@ var Play = {
       this.scoreText.text = "Cash: " + this.displayCash.toFixed(2);
     }
 
-    this.timer -= .01;
-    this.timerText.text = "Time: " + this.timer.toFixed(2);
-    if (this.timer <= 0) {
-      this.playerLost();
+    if (!game.state.ended) {
+      this.timer -= .01;
+      this.timerText.text = "Time: " + this.timer.toFixed(2);
+      if (this.timer <= 0) {
+        this.playerLost();
+      }
     }
     
     // scroll the food items with pointer
     // console.log(game.input.activePointer.movementX);
 
     // make customer and move him to position
-    if (!game.state.ended && this.customers.length < this.numCustomerPositions && Math.random() > .99) {
+    if (!game.state.ended && this.customers.length < this.numCustomerPositions && (game.state.spawnCustomer())) {
       var customer = this.makeCustomer(this.customerTypes[Math.floor(Math.random() * this.customerTypes)]);
       this.customers.push(customer);
       for (var i = this.numCustomerPositions - 1; i >= 0; i --) {
@@ -160,11 +163,13 @@ var Play = {
         .to({alpha: 0}, 4500)
         .start();
         tween2.onComplete.add(function() {
-          _this.cash -= 5;
+          console.log('before: ', _this.cash);
+          _this.cash -= game.state.janitorCost;
+          console.log('after: ', _this.cash);
+          _this.moneyLostSound.play()
           _this.poopGroup.remove(targetMess);
           _this.janitor.play("walk");
           if (!_this.poopGroup.children.length) {
-            // TODO: play cash loss sound
             destX = Math.random() > .5 ? game.width + 200 : -200;
             if (destX < _this.janitor.x) {
               _this.janitor.scale.x = -1;
@@ -232,12 +237,15 @@ var Play = {
       // see if food landed on animal head. If it didn't, put it back
       var eaten = false;
       var sick = true;
+      var foodEaten;
       for (var i = 0; i < this.customers.length; i ++) {
         var customer = this.customers[i];
         game.physics.arcade.overlap(food, customer, function() {
           if (customer.state.sick) {
             return;
           }
+
+          foodEaten = food;
           
           eaten = true;
           // play eat sound
@@ -274,23 +282,23 @@ var Play = {
           this.sickSound.play();
         }
 
+        var cashWon = game.state.foodValue(foodEaten.state.type);
+        // TODO: make a cash particle
+        this.cash += cashWon;
+        this.moneyGainedSound.play();
+        if (this.cash >= this.cashGoal) {
+          this.playerWon();
+        }
+        else if (this.cash < 0) {
+          this.playerLost();
+        }
+        game.add.tween(this)
+        .to({displayCash: this.cash}, 250)
+        .start();
+
         if (customer.state.foodTypes.length === 0 && !sick) {
           // send customer off screen to right
           customer.state.leaveScene(1);
-
-          // TODO: make a cash particle
-          var cashWon = Math.random() * 1 + 1;
-          this.cash += cashWon;
-          this.moneyGainedSound.play();
-          if (this.cash >= this.cashGoal) {
-            this.playerWon();
-          }
-          else if (this.cash < 0) {
-            this.playerLost();
-          }
-          game.add.tween(this)
-          .to({displayCash: this.cash}, 1000)
-          .start();
         }
 
         // add new piece of food
@@ -498,7 +506,7 @@ var Play = {
       potty.state.occupied = true;
       _this.pottyDoorSound.play();
       potty.state.door.play("occupied");
-      setTimeout(function() { potty.state.unoccupy(customer) }, 3*1000);
+      setTimeout(function() { potty.state.unoccupy(customer) }, game.state.pottyTime(customer));
 
       game.add.tween(potty.state.spinner)
       .to({rotation: Math.PI}, 750, Phaser.Easing.Elastic.Out)
