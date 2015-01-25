@@ -11,7 +11,7 @@ var LevelSelect = {
   create: function() {
     game.globals.playTitleMusic();
     var _this = this;
-    this.game.add.sprite(0, 0, "Sprites", "Background_Gameplay_1.png");
+    this.game.add.sprite(0, 0, "ExtraSprites", "Background_Gameplay_1.png");
     this.sfxButtonClick = game.add.audio("ButtonClick", 1.0);
 
     for (var i=0; i<LEVELS; i++) {

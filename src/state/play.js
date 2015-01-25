@@ -22,7 +22,7 @@ var Play = {
     this.cleaningUpPoop = false; // is the janitor currently cleaning up poop?
     
     // ui components
-    this.game.add.sprite(0, 0, "Sprites", "Background_Gameplay_1.png");
+    this.game.add.sprite(0, 0, "ExtraSprites", "Background_Gameplay_1.png");
     this.pottyGroup = game.add.group();
     this.poopGroup = game.add.group();
     
@@ -33,7 +33,7 @@ var Play = {
     this.janitor.play("walk");
     
     this.customerGroup = game.add.group();
-    this.game.add.sprite(0, game.height - 160, "Sprites", "Table_1.png");
+    this.game.add.sprite(0, game.height - 160, "ExtraSprites", "Table_1.png");
     this.foodItems = game.add.group();
     this.scoreText = game.add.text(this.game.width - 150, 15, "Cash: " + this.displayCash, {fill: "#cc0000", font: "30px Impact"});
     this.timerText = game.add.text(10, 15, "Time: " + this.displayCash, {fill: "#cc0000", font: "30px Impact"});

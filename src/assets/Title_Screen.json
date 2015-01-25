@@ -1,0 +1,68 @@
+{"frames": {
+
+"Awning_1.png":
+{
+	"frame": {"x":2,"y":1104,"w":750,"h":73},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":750,"h":73},
+	"sourceSize": {"w":750,"h":73}
+},
+"Background_Gameplay_1.png":
+{
+	"frame": {"x":2,"y":2,"w":750,"h":1100},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":750,"h":1100},
+	"sourceSize": {"w":750,"h":1100}
+},
+"Table_1.png":
+{
+	"frame": {"x":1007,"y":514,"w":750,"h":171},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":750,"h":171},
+	"sourceSize": {"w":750,"h":171}
+},
+"Title_Circle_1.png":
+{
+	"frame": {"x":754,"y":2,"w":914,"h":510},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":12,"w":914,"h":510},
+	"sourceSize": {"w":914,"h":522}
+},
+"Title_Janitor_1.png":
+{
+	"frame": {"x":1571,"y":687,"w":190,"h":333},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":9,"w":190,"h":333},
+	"sourceSize": {"w":201,"h":342}
+},
+"Title_Potty_1.png":
+{
+	"frame": {"x":754,"y":514,"w":251,"h":447},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":13,"y":8,"w":251,"h":447},
+	"sourceSize": {"w":274,"h":464}
+},
+"Title_PupuPanic_1.png":
+{
+	"frame": {"x":1007,"y":687,"w":562,"h":445},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":15,"y":0,"w":562,"h":445},
+	"sourceSize": {"w":590,"h":454}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "Title_Screen.png",
+	"format": "RGBA8888",
+	"size": {"w":1763,"h":1179},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:d58a4a3279f15a6628adb9daec3f4ed1:cd19366b23be1a63709b152e569413f7:5fcc268959ce5ff088b567ebab8ff8d9$"
+}
+}
