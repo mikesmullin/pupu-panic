@@ -9,7 +9,7 @@ var LevelSelect = {
   preload: function() {
   },
   create: function() {
-    this.game.add.sprite(0, 0, "Sprites", "Background_1.png");
+    this.game.add.sprite(0, 0, "Sprites", "Background_Gameplay_1.png");
 
     for (var i=0; i<LEVELS; i++) {
       var unit = PADDING + BUTTON_SIZE;

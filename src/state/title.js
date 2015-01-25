@@ -3,7 +3,7 @@ var Title = {
   },
   create: function() {
     var _this = this;
-    this.game.add.sprite(0, 0, "Sprites", "Background_1.png");
+    this.game.add.sprite(0, 0, "Sprites", "Background_Gameplay_1.png");
 
     var titleText = this.game.add.sprite(game.width / 2, -150, "Sprites", "Food_BoneBun_Good_1.png");
     titleText.anchor.setTo(0.5, 0.5);
