@@ -29,7 +29,6 @@ var Preload = {
     game.load.audio("YouLose", ["assets/Lose_1.mp3", "assets/Lose_1.ogg"]);
 
     game.load.audio("Gummibar", ["assets/gummibar_funny_dj.mp3", "assets/gummibar_funny_dj.ogg"]);
-
   },
   create: function() {
     game.globals.playTitleMusic();
