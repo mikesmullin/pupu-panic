@@ -26,6 +26,7 @@ var Title = {
     var creditsButton = this.game.add.sprite(game.width / 2, game.height / 2 + 240, "Sprites", "Food_CornBurger_Good_1.png");
     creditsButton.alpha = 0;
     creditsButton.anchor.setTo(0.5, 0.5);
+    creditsButton.inputEnabled = true;
     creditsButton.events.onInputDown.add(function() {
       game.state.start("Credits");
     });
