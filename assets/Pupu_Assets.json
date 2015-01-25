@@ -80,7 +80,7 @@
 	"spriteSourceSize": {"x":65,"y":92,"w":161,"h":411},
 	"sourceSize": {"w":315,"h":503}
 },
-"Customer_Bird_1.png":
+"Customer_Bird_Standing_1.png":
 {
 	"frame": {"x":428,"y":2,"w":189,"h":415},
 	"rotated": false,
@@ -120,7 +120,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":189,"h":408},
 	"sourceSize": {"w":189,"h":408}
 },
-"Customer_Cat_holding_1.png":
+"Customer_Cat_Holding_1.png":
 {
 	"frame": {"x":588,"y":419,"w":171,"h":408},
 	"rotated": false,
@@ -256,7 +256,7 @@
 	"spriteSourceSize": {"x":38,"y":61,"w":100,"h":86},
 	"sourceSize": {"w":189,"h":182}
 },
-"Face_Dog_Happy_1.png":
+"Face_Dog_Neutral_1.png":
 {
 	"frame": {"x":680,"y":1734,"w":100,"h":88},
 	"rotated": false,
@@ -264,7 +264,7 @@
 	"spriteSourceSize": {"x":38,"y":64,"w":100,"h":88},
 	"sourceSize": {"w":189,"h":182}
 },
-"Face_Dog_Neutral_1.png":
+"Face_Dog_Happy_1.png":
 {
 	"frame": {"x":708,"y":1622,"w":107,"h":110},
 	"rotated": false,

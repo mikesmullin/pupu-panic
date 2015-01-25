@@ -28,10 +28,30 @@ var Preload = {
   },
   create: function() {
     game.globals.playTitleMusic();
-
     // this will be the first page displayed on load
     game.state.start("Title");
-    //game.state.start("Credits");
+
+    /*
+    // uncomment below for faster dev iteration
+    game.state.cashGoal = 100;
+    game.state.timer = 100;
+    game.state.numCustomerPositions = 3;
+    game.state.numFoodItems = 8;
+    game.state.customerTypes = [0, 1, 2, 3, 4];
+    game.state.foodTypes = [0, 1, 2, 3, 4];
+    game.state.numPotties = 2;
+    game.state.spawnCustomer = function() {
+      return true;
+    }
+    game.state.pottyTime = function(customer) {
+      return 1000;
+    }
+    game.state.foodValue = function(foodType) {
+      return Math.random() * 1 + 1;
+    }
+    game.state.janitorCost = 5;
+    game.state.start("Play");
+    */
   },
   update: function() {
   },
