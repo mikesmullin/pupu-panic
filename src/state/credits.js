@@ -2,6 +2,7 @@ var Credits = {
   preload: function() {
   },
   create: function() {
+    game.globals.playTitleMusic();
     var _this = this;
     this.game.add.sprite(0, 0, "Sprites", "Background_Gameplay_1.png");
         

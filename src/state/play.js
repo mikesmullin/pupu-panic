@@ -6,6 +6,7 @@ var Play = {
     game.load.image('mess', 'assets/mess.jpg');
   },
   create: function() {
+    game.globals.playLevelMusic();
     var _this = this;
 
     // state vars
