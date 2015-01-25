@@ -20,22 +20,22 @@ var Play = {
     this.foodTypes = [];
     this.maxFoodDepth = 1;
     this.cleaningUpPoop = false; // is the janitor currently cleaning up poop?
-    
+
     // ui components
     this.game.add.sprite(0, 0, "ExtraSprites", "Background_Gameplay_1.png");
     this.pottyGroup = game.add.group();
     this.poopGroup = game.add.group();
-    
+
     this.janitor = game.add.sprite(game.width + 200, 140, "Sprites");
     this.janitor.animations.add("walk", ["Janitor_Walk_1.png", "Janitor_Walk_2.png"], 2.5, true);
     this.janitor.animations.add("mop", ["Janitor_Mop_1.png", "Janitor_Mop_2.png"], 1.5, true);
     this.janitor.anchor.set(.5, .5);
     this.janitor.play("walk");
-    
+
     this.customerGroup = game.add.group();
     this.game.add.sprite(0, game.height - 160, "ExtraSprites", "Table_1.png");
     this.foodItems = game.add.group();
-    
+
     // audio
     this.eatSound = game.add.audio("EatingFood", 1.0);
     this.moneyGainedSound = game.add.audio("MoneyGained", 1.0);
@@ -80,7 +80,7 @@ var Play = {
         // if (lastX !== -1 || lastY !== -1) {
         //   this.foodItems.children.forEach(function(foodItem) {
         //     foodItem.body.velocity.x = moveAmountX * 10;
-        //   });          
+        //   });
         // }
         lastX = -1;
         lastY = -1;
@@ -102,7 +102,7 @@ var Play = {
         this.playerLost();
       }
     }
-    
+
     // scroll the food items with pointer
     // console.log(game.input.activePointer.movementX);
 
@@ -247,7 +247,7 @@ var Play = {
           }
 
           foodEaten = food;
-          
+
           eaten = true;
           // play eat sound
           _this.eatSound.play();
@@ -471,7 +471,7 @@ var Play = {
 
     customer.state.messYoself = function () {
       _this.messSound.play();
-      _this.makeMess(customer.x - (customer.width /2), 
+      _this.makeMess(customer.x - (customer.width /2),
         customer.y + customer.height + 100);
       customer.state.leaveScene(1);
     };
@@ -482,7 +482,7 @@ var Play = {
     var _this = this;
     var potty = game.add.sprite(x, y);
     potty.state = {occupied: false, door: null, spinner: null};
-    
+
     var pottyDoor = game.add.sprite(0, 0, "Sprites");
     potty.state.door = pottyDoor;
     pottyDoor.animations.add("unoccupied", ["Potty_1.png"], 15, true);
@@ -491,7 +491,7 @@ var Play = {
     var pottySpinner = game.add.sprite(pottyDoor.width / 2, 72, "Sprites", "Potty_Alert_1.png");
     potty.state.spinner = pottySpinner;
     pottySpinner.anchor.set(.5, .5);
-    
+
     potty.addChild(pottySpinner);
     potty.addChild(pottyDoor);
 
