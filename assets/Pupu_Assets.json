@@ -1,0 +1,604 @@
+{"frames": {
+
+"Bird_Walk_1.png":
+{
+	"frame": {"x":619,"y":2,"w":185,"h":413},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":413},
+	"sourceSize": {"w":185,"h":413}
+},
+"Bird_Walk_2.png":
+{
+	"frame": {"x":806,"y":2,"w":185,"h":413},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":413},
+	"sourceSize": {"w":185,"h":413}
+},
+"Bunny_Walk_1.png":
+{
+	"frame": {"x":2,"y":2,"w":232,"h":503},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":232,"h":503},
+	"sourceSize": {"w":232,"h":503}
+},
+"Bunny_Walk_2.png":
+{
+	"frame": {"x":2,"y":507,"w":232,"h":503},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":232,"h":503},
+	"sourceSize": {"w":232,"h":503}
+},
+"Button_Back_Active_1.png":
+{
+	"frame": {"x":524,"y":1324,"w":137,"h":123},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":3,"w":137,"h":123},
+	"sourceSize": {"w":140,"h":128}
+},
+"Button_Back_Inactive_1.png":
+{
+	"frame": {"x":686,"y":1824,"w":137,"h":123},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":3,"w":137,"h":123},
+	"sourceSize": {"w":140,"h":128}
+},
+"Button_Next_Active_1.png":
+{
+	"frame": {"x":825,"y":1770,"w":137,"h":123},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":137,"h":123},
+	"sourceSize": {"w":140,"h":128}
+},
+"Button_Next_Inactive_1.png":
+{
+	"frame": {"x":964,"y":1772,"w":137,"h":123},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":2,"w":137,"h":123},
+	"sourceSize": {"w":140,"h":128}
+},
+"Cat_Walk_1.png":
+{
+	"frame": {"x":345,"y":915,"w":161,"h":411},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":65,"y":92,"w":161,"h":411},
+	"sourceSize": {"w":315,"h":503}
+},
+"Cat_Walk_2.png":
+{
+	"frame": {"x":508,"y":911,"w":161,"h":411},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":65,"y":92,"w":161,"h":411},
+	"sourceSize": {"w":315,"h":503}
+},
+"Customer_Bird_1.png":
+{
+	"frame": {"x":428,"y":2,"w":189,"h":415},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":189,"h":415},
+	"sourceSize": {"w":189,"h":415}
+},
+"Customer_Bird_Holding_1.png":
+{
+	"frame": {"x":180,"y":1012,"w":163,"h":415},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":163,"h":415},
+	"sourceSize": {"w":163,"h":415}
+},
+"Customer_Bunny_Holding_1.png":
+{
+	"frame": {"x":2,"y":1012,"w":176,"h":492},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":176,"h":492},
+	"sourceSize": {"w":176,"h":492}
+},
+"Customer_Bunny_Standing_1.png":
+{
+	"frame": {"x":236,"y":2,"w":190,"h":492},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":190,"h":492},
+	"sourceSize": {"w":190,"h":492}
+},
+"Customer_Cat_Standing_1.png":
+{
+	"frame": {"x":993,"y":2,"w":189,"h":408},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":189,"h":408},
+	"sourceSize": {"w":189,"h":408}
+},
+"Customer_Cat_holding_1.png":
+{
+	"frame": {"x":588,"y":419,"w":171,"h":408},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":171,"h":408},
+	"sourceSize": {"w":171,"h":408}
+},
+"Customer_Dog_Holding_1.png":
+{
+	"frame": {"x":2,"y":1506,"w":175,"h":417},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":0,"w":175,"h":417},
+	"sourceSize": {"w":176,"h":417}
+},
+"Customer_Dog_Standing_1.png":
+{
+	"frame": {"x":236,"y":496,"w":189,"h":417},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":189,"h":417},
+	"sourceSize": {"w":189,"h":417}
+},
+"Customer_Frog_Holding_1.png":
+{
+	"frame": {"x":1089,"y":412,"w":155,"h":397},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":155,"h":397},
+	"sourceSize": {"w":155,"h":397}
+},
+"Customer_Frog_Standing_1.png":
+{
+	"frame": {"x":1184,"y":2,"w":189,"h":397},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":189,"h":397},
+	"sourceSize": {"w":189,"h":397}
+},
+"Dog_Walk_1.png":
+{
+	"frame": {"x":761,"y":417,"w":162,"h":406},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":162,"h":406},
+	"sourceSize": {"w":162,"h":406}
+},
+"Dog_Walk_2.png":
+{
+	"frame": {"x":925,"y":417,"w":162,"h":406},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":162,"h":406},
+	"sourceSize": {"w":162,"h":406}
+},
+"Face_Bird_Anger_1.png":
+{
+	"frame": {"x":1218,"y":1943,"w":80,"h":85},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":48,"y":62,"w":80,"h":85},
+	"sourceSize": {"w":189,"h":179}
+},
+"Face_Bird_Happy_1.png":
+{
+	"frame": {"x":686,"y":1949,"w":89,"h":91},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":40,"y":54,"w":89,"h":91},
+	"sourceSize": {"w":189,"h":179}
+},
+"Face_Bird_Neutral_1.png":
+{
+	"frame": {"x":588,"y":829,"w":80,"h":78},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":48,"y":70,"w":80,"h":78},
+	"sourceSize": {"w":189,"h":179}
+},
+"Face_Bunny_Anger_1.png":
+{
+	"frame": {"x":1130,"y":1942,"w":86,"h":89},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":47,"y":31,"w":86,"h":89},
+	"sourceSize": {"w":190,"h":151}
+},
+"Face_Bunny_Happy_1.png":
+{
+	"frame": {"x":954,"y":1897,"w":86,"h":116},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":47,"y":23,"w":86,"h":116},
+	"sourceSize": {"w":190,"h":151}
+},
+"Face_Bunny_Neutral_1.png":
+{
+	"frame": {"x":1042,"y":1897,"w":86,"h":97},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":47,"y":40,"w":86,"h":97},
+	"sourceSize": {"w":190,"h":151}
+},
+"Face_Cat_Anger_1.png":
+{
+	"frame": {"x":1232,"y":1854,"w":98,"h":87},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":37,"y":54,"w":98,"h":87},
+	"sourceSize": {"w":189,"h":166}
+},
+"Face_Cat_Happy_1.png":
+{
+	"frame": {"x":236,"y":915,"w":98,"h":94},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":37,"y":60,"w":98,"h":94},
+	"sourceSize": {"w":189,"h":166}
+},
+"Face_Cat_Neutral_1.png":
+{
+	"frame": {"x":518,"y":1960,"w":98,"h":80},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":37,"y":60,"w":98,"h":80},
+	"sourceSize": {"w":189,"h":166}
+},
+"Face_Dog_Anger_1.png":
+{
+	"frame": {"x":1130,"y":1854,"w":100,"h":86},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":38,"y":61,"w":100,"h":86},
+	"sourceSize": {"w":189,"h":182}
+},
+"Face_Dog_Happy_1.png":
+{
+	"frame": {"x":680,"y":1734,"w":100,"h":88},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":38,"y":64,"w":100,"h":88},
+	"sourceSize": {"w":189,"h":182}
+},
+"Face_Dog_Neutral_1.png":
+{
+	"frame": {"x":708,"y":1622,"w":107,"h":110},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":51,"w":107,"h":110},
+	"sourceSize": {"w":189,"h":182}
+},
+"Face_Frog_Anger_1.png":
+{
+	"frame": {"x":825,"y":1895,"w":127,"h":120},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":23,"y":6,"w":127,"h":120},
+	"sourceSize": {"w":189,"h":161}
+},
+"Face_Frog_Happy_1.png":
+{
+	"frame": {"x":708,"y":1371,"w":123,"h":136},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":22,"y":9,"w":123,"h":136},
+	"sourceSize": {"w":189,"h":161}
+},
+"Face_Frog_Neutral_1.png":
+{
+	"frame": {"x":708,"y":1509,"w":120,"h":111},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":23,"y":11,"w":120,"h":111},
+	"sourceSize": {"w":189,"h":161}
+},
+"Food_BoneBun_Bad_1.png":
+{
+	"frame": {"x":2,"y":1925,"w":173,"h":105},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":36,"w":173,"h":105},
+	"sourceSize": {"w":173,"h":173}
+},
+"Food_BoneBun_Good_1.png":
+{
+	"frame": {"x":177,"y":1945,"w":170,"h":95},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":46,"w":170,"h":95},
+	"sourceSize": {"w":173,"h":173}
+},
+"Food_CarrotBun_Bad_1.png":
+{
+	"frame": {"x":345,"y":1328,"w":177,"h":141},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":36,"w":177,"h":141},
+	"sourceSize": {"w":177,"h":177}
+},
+"Food_CarrotBun_Good_1.png":
+{
+	"frame": {"x":340,"y":1848,"w":177,"h":95},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":45,"w":177,"h":95},
+	"sourceSize": {"w":177,"h":177}
+},
+"Food_CornBurger_Bad_1.png":
+{
+	"frame": {"x":541,"y":1594,"w":165,"h":136},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":11,"w":165,"h":136},
+	"sourceSize": {"w":171,"h":171}
+},
+"Food_CornBurger_Good_1.png":
+{
+	"frame": {"x":519,"y":1842,"w":165,"h":116},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":31,"w":165,"h":116},
+	"sourceSize": {"w":171,"h":171}
+},
+"Food_CornSalad_Bad_1.png":
+{
+	"frame": {"x":1005,"y":1514,"w":166,"h":127},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":166,"h":127},
+	"sourceSize": {"w":167,"h":167}
+},
+"Food_CornSalad_Good_1.png":
+{
+	"frame": {"x":988,"y":1643,"w":166,"h":127},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":166,"h":127},
+	"sourceSize": {"w":167,"h":167}
+},
+"Food_DragonBurger_Bad_1.png":
+{
+	"frame": {"x":1205,"y":1042,"w":185,"h":139},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":20,"w":185,"h":139},
+	"sourceSize": {"w":187,"h":187}
+},
+"Food_DragonBurger_Good_1.png":
+{
+	"frame": {"x":1018,"y":1105,"w":185,"h":126},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":33,"w":185,"h":126},
+	"sourceSize": {"w":187,"h":187}
+},
+"Food_FishKebob_Bad_1.png":
+{
+	"frame": {"x":340,"y":1670,"w":171,"h":176},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":171,"h":176},
+	"sourceSize": {"w":176,"h":176}
+},
+"Food_FishKebob_Good_1.png":
+{
+	"frame": {"x":1202,"y":1324,"w":171,"h":141},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":171,"h":141},
+	"sourceSize": {"w":176,"h":176}
+},
+"Food_FlyKebob_Bad_1.png":
+{
+	"frame": {"x":513,"y":1732,"w":165,"h":108},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":19,"w":165,"h":108},
+	"sourceSize": {"w":167,"h":167}
+},
+"Food_FlyKebob_Good_1.png":
+{
+	"frame": {"x":1173,"y":1601,"w":165,"h":108},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":19,"w":165,"h":108},
+	"sourceSize": {"w":167,"h":167}
+},
+"Food_MouseBurger_Bad_1.png":
+{
+	"frame": {"x":1018,"y":1233,"w":182,"h":139},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":15,"w":182,"h":139},
+	"sourceSize": {"w":182,"h":182}
+},
+"Food_MouseBurger_Good_1.png":
+{
+	"frame": {"x":1205,"y":1183,"w":182,"h":139},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":15,"w":182,"h":139},
+	"sourceSize": {"w":182,"h":182}
+},
+"Food_Salad_Bad_1.png":
+{
+	"frame": {"x":1246,"y":698,"w":165,"h":143},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":165,"h":143},
+	"sourceSize": {"w":172,"h":172}
+},
+"Food_Salad_Good_1.png":
+{
+	"frame": {"x":541,"y":1449,"w":165,"h":143},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":165,"h":143},
+	"sourceSize": {"w":172,"h":172}
+},
+"Food_SteakKebob_Bad_1.png":
+{
+	"frame": {"x":817,"y":1630,"w":169,"h":138},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":169,"h":138},
+	"sourceSize": {"w":169,"h":169}
+},
+"Food_SteakKebob_Good_1.png":
+{
+	"frame": {"x":1018,"y":1374,"w":169,"h":138},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":169,"h":138},
+	"sourceSize": {"w":169,"h":169}
+},
+"Food_WormBun_Bad_1.png":
+{
+	"frame": {"x":833,"y":1385,"w":170,"h":138},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":32,"w":170,"h":138},
+	"sourceSize": {"w":170,"h":170}
+},
+"Food_WormBun_Good_1.png":
+{
+	"frame": {"x":830,"y":1525,"w":170,"h":103},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":44,"w":170,"h":103},
+	"sourceSize": {"w":170,"h":170}
+},
+"Food_WormKebob_Bad_1.png":
+{
+	"frame": {"x":1189,"y":1467,"w":167,"h":132},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":36,"w":167,"h":132},
+	"sourceSize": {"w":168,"h":168}
+},
+"Food_WormKebob_Good_1.png":
+{
+	"frame": {"x":349,"y":1945,"w":167,"h":93},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":44,"w":167,"h":93},
+	"sourceSize": {"w":168,"h":168}
+},
+"Frog_Walk_1.png":
+{
+	"frame": {"x":427,"y":496,"w":159,"h":413},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":159,"h":413},
+	"sourceSize": {"w":159,"h":413}
+},
+"Frog_Walk_2.png":
+{
+	"frame": {"x":179,"y":1506,"w":159,"h":413},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":159,"h":413},
+	"sourceSize": {"w":159,"h":413}
+},
+"Icon_Hearts_1.png":
+{
+	"frame": {"x":1156,"y":1711,"w":165,"h":141},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":24,"y":0,"w":165,"h":141},
+	"sourceSize": {"w":189,"h":161}
+},
+"Icon_Sweat_1.png":
+{
+	"frame": {"x":1375,"y":2,"w":36,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":36,"h":64},
+	"sourceSize": {"w":36,"h":64}
+},
+"Janitor_Mop_1.png":
+{
+	"frame": {"x":671,"y":829,"w":168,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":168,"h":295},
+	"sourceSize": {"w":168,"h":295}
+},
+"Janitor_Mop_2.png":
+{
+	"frame": {"x":1246,"y":401,"w":161,"h":295},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":161,"h":295},
+	"sourceSize": {"w":168,"h":295}
+},
+"Janitor_Walk_1.png":
+{
+	"frame": {"x":671,"y":1126,"w":168,"h":243},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":168,"h":243},
+	"sourceSize": {"w":168,"h":243}
+},
+"Janitor_Walk_2.png":
+{
+	"frame": {"x":1045,"y":825,"w":158,"h":243},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":158,"h":243},
+	"sourceSize": {"w":168,"h":243}
+},
+"Level_Locked_1.png":
+{
+	"frame": {"x":1205,"y":843,"w":199,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":199,"h":197},
+	"sourceSize": {"w":200,"h":200}
+},
+"Level_Unlocked_1.png":
+{
+	"frame": {"x":340,"y":1471,"w":199,"h":197},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":199,"h":197},
+	"sourceSize": {"w":200,"h":200}
+},
+"Potty_1.png":
+{
+	"frame": {"x":841,"y":1105,"w":175,"h":278},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":3,"w":175,"h":278},
+	"sourceSize": {"w":175,"h":281}
+},
+"Potty_Alert_1.png":
+{
+	"frame": {"x":428,"y":419,"w":74,"h":65},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":74,"h":65},
+	"sourceSize": {"w":74,"h":65}
+},
+"Potty_Open_Door_1.png":
+{
+	"frame": {"x":841,"y":825,"w":202,"h":278},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":4,"w":202,"h":278},
+	"sourceSize": {"w":202,"h":282}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "Pupu_Assets.png",
+	"format": "RGBA8888",
+	"size": {"w":1413,"h":2042},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:3d1639affc83f5bb5c9f14d58ae5d26c:aebc3469c0573cedbde87f83927a68f1:8ee01b2c097d3a913279a8681b807879$"
+}
+}
