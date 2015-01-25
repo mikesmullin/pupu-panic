@@ -14,47 +14,74 @@ var LevelSelect = {
     for (var i=0; i<LEVELS; i++) {
       var unit = PADDING + BUTTON_SIZE;
       var row = Math.floor(i / COLS);
-      level_buttons[i] =
-        new Phaser.Rectangle(
-          PADDING + ((i % COLS) * unit),
-          PADDING + (row * unit),
-          BUTTON_SIZE,
-          BUTTON_SIZE);
+      level_buttons[i] = this.game.add.sprite(
+        PADDING + ((i % COLS) * unit),
+        PADDING + (row * unit),
+        "Sprites", "Food_CarrotBun_Good_1.png");
+      level_buttons[i].inputEnabled = true;
+      level_buttons[i].events.onInputDown.add(
+        (function (i) { return function() {
+        switch (i+1) {
+          case 1:
+            game.state.cashGoal = 10;
+            game.state.timer = 100;
+            game.state.numCustomerPositions = 2;
+            game.state.numFoodItems = 8;
+            game.state.customerTypes = [0];
+            game.state.foodTypes = [0];
+            game.state.numPotties = 0;
+            break;
+
+          case 2:
+            game.state.cashGoal = 50;
+            game.state.timer = 100;
+            game.state.numCustomerPositions = 3;
+            game.state.numFoodItems = 8;
+            game.state.customerTypes = [0];
+            game.state.foodTypes = [0, 1, 2, 3, 4];
+            game.state.numPotties = 4;
+            break;
+
+          default:
+            return;
+        }
+        game.state.start("Play");
+      }; }(i)));
     }
 
     var w = 200, h = 80;
-    page_prev = new Phaser.Rectangle(
+    page_prev = this.game.add.sprite(
       PADDING,
       game.height - PADDING - h,
-      w,
-      h);
-
-    page_next = new Phaser.Rectangle(
+      "Sprites", "Food_CarrotBun_Good_1.png");
+    page_prev.inputEnabled = true;
+    page_prev.events.onInputDown.add(function() {
+      game.state.start("Title");
+    });
+    page_next = this.game.add.sprite(
       game.width - PADDING - w,
       game.height - PADDING - h,
-      w,
-      h);
-
-
-    function startGame(event) {
-      // game.scale.startFullScreen();
-      game.state.start("Play");
-    }
-    game.input.keyboard.onDownCallback = startGame;
-    this.game.input.onDown.add(startGame);
+      "Sprites", "Food_CarrotBun_Good_1.png");
+    page_next.inputEnabled = true;
+    page_next.events.onInputDown.add(function() {
+      // tween
+      alert('coming soon; more pages of levels');
+    });
   },
   update: function() {
   },
   render: function() {
     for (var i=0; i<LEVELS; i++) {
       var rect = level_buttons[i];
-      game.debug.rectangle(level_buttons[i], '#ffffff');
-      game.debug.text(i+1, rect.centerX-(25), rect.y+125, '#000000', '80px arial');
+      game.debug.text(i+1,
+        rect.x+25,
+        rect.y+125,
+        '#000000',
+        '80px arial');
     }
-    game.debug.rectangle(page_prev, '#ffffff');
-    game.debug.text('prev', page_prev.centerX-80, page_prev.y+60, '#000000', '80px arial');
-    game.debug.rectangle(page_next, '#ffffff');
-    game.debug.text('next', page_next.centerX-80, page_next.y+60, '#000000', '80px arial');
+
+    game.debug.text('prev', page_prev.x, page_prev.y+60, '#000000', '80px arial');
+    game.debug.text('next', page_next.x, page_next.y+60, '#000000', '80px arial');
   },
   onSwipe: function() {
     if (Phaser.Point.distance(game.input.activePointer.position, game.input.activePointer.positionDown) > 150 && game.input.activePointer.duration > 100 && game.input.activePointer.duration < 250) {
