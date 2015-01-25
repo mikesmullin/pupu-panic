@@ -44,5 +44,9 @@ var Credits = {
     credits.bringToTop();
     backButton.bringToTop();
     game.debug.text('back', backButton.x-30, backButton.y+30, '#000000', '80px arial');
+  },
+  shutdown: function() {
+    this.music.stop();
   }
+
 };
