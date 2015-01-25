@@ -2,6 +2,16 @@ var Title = {
   preload: function() {
   },
   create: function() {
+    game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.input.onDown.add(function () {
+      if (game.scale.isFullScreen) {
+        //game.scale.stopFullScreen(); // use esc to toggle instead
+      }
+      else {
+        game.scale.startFullScreen(false);
+      }
+    }, this);
+
     game.globals.playTitleMusic();
     var _this = this;
     this.game.add.sprite(0, 0, "ExtraSprites", "Background_Gameplay_1.png");
