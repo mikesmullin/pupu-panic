@@ -30,8 +30,8 @@ var Preload = {
     game.globals.playTitleMusic();
 
     // this will be the first page displayed on load
-    //game.state.start("Title");
-    game.state.start("Credits");
+    game.state.start("Title");
+    //game.state.start("Credits");
   },
   update: function() {
   },
