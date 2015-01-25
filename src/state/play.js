@@ -3,7 +3,7 @@ var CUSTOMER_SIZE = 240;
 
 var Play = {
   preload: function() {
-    game.load.image('mess', 'assets/mess.jpg');
+    game.load.image('mess', 'assets/mess.png');
   },
   create: function() {
     game.globals.playLevelMusic();
@@ -43,7 +43,7 @@ var Play = {
     this.sickSound = game.add.audio("UhOh", 1.0);
     this.winSound = game.add.audio("YouWin", 1.0);
     this.messSound = game.add.audio("MessSound", 1.0);
-    this.janitorSound = game.add.audio("Janitor", 2.0);
+    this.janitorSound = game.add.audio("Janitor", 3.0);
     this.pottyDoorSound = game.add.audio("PortaPottyOpen", 1.0);
     this.moneyLostSound = game.add.audio("MoneyLost", 1.0);
 
@@ -108,7 +108,8 @@ var Play = {
 
     // make customer and move him to position
     if (!game.state.ended && this.customers.length < this.numCustomerPositions && (game.state.spawnCustomer())) {
-      var customer = this.makeCustomer(this.customerTypes[Math.floor(Math.random() * this.customerTypes)]);
+      var randomType = this.customerTypes[Math.floor(Math.random() * this.customerTypes.length)]
+      var customer = this.makeCustomer(randomType);
       this.customers.push(customer);
       for (var i = this.numCustomerPositions - 1; i >= 0; i --) {
         if (!this.customerPositions[i]) {
@@ -152,7 +153,11 @@ var Play = {
       else {
         this.janitor.scale.x = 1;
       }
-      this.janitor.y = targetMess.y - 10;
+      this.janitor.y = targetMess.y - 70;
+      var working = game.add.group();
+      working.add(this.janitor);
+      working.add(targetMess);
+      targetMess.bringToTop();
       distance = Math.abs(targetMess.x - this.janitor.x);
       var tween1 = game.add.tween(this.janitor)
       .to({x: targetMess.x + targetMess.width / 2}, distance * 4.5)
@@ -282,6 +287,9 @@ var Play = {
           // TODO: play sick face
           this.sickSound.play();
         }
+        else {
+          customer.state.face.play('happy');
+        }
 
         var cashWon = game.state.foodValue(foodEaten.state.type);
         // TODO: make a cash particle
@@ -380,16 +388,14 @@ var Play = {
     //   var foodType = this.foodTypes[Math.floor(Math.random() * this.foodTypes.length)];
     //   customer.state.foodTypes.push(foodType);
     // }
+
     // graphics
 
-      // 0 - bunny
-  // 1 - cat
-  // 2 - dog
-  // 3 - bird
-  // 4 - frog
-
-    var body = game.add.sprite(0, 0, "Sprites");
-    customer.state.body = body;
+    // 0 - bunny
+    // 1 - cat
+    // 2 - dog
+    // 3 - bird
+    // 4 - frog
     var animName = null;
     switch (type) {
       case 0: animName = "Bunny"; break;
@@ -398,9 +404,15 @@ var Play = {
       case 3: animName = "Bird"; break;
       case 4: animName = "Frog"; break;
     }
+
+    var body = game.add.sprite(0, 0, "Sprites");
+    customer.state.body = body;
     body.animations.add("walk", ["Customer_" + animName + "_Standing_1.png"], 15, true);
+    body.animations.add("gtg", ["Customer_" + animName + "_Holding_1.png"], 15, true);
     customer.state.foodTypes = [type];
     body.play("walk");
+    customer.addChild(body);
+
     // var thoughtBubble = game.add.sprite(60, -130, "Sprites", "Though_Bubble_1.png");
     // thoughtBubble.alpha = 0;
     // customer.state.thoughtBubble = thoughtBubble;
@@ -411,8 +423,21 @@ var Play = {
     //   customer.state.foodThoughts.push(foodThought);
     //   // TODO: spread'em out
     // }
-    customer.addChild(body);
     // customer.addChild(thoughtBubble);
+
+
+
+    var face = game.add.sprite(0, animName == 'Bunny' ? 100 : 10, "Sprites");
+    customer.state.face = face;
+    var emotes = ['Anger', 'Happy', 'Neutral'];
+    for (var i=0; i<emotes.length; i++) {
+      var emote = emotes[i];
+      face.animations.add(emote.toLowerCase(), ["Face_" + animName + "_"+emote+"_1.png"], 15, true);
+    }
+    face.play("neutral");
+    customer.addChild(face);
+    face.bringToTop();
+
 
     // animation
     var toY = customer.y - 30;
@@ -428,12 +453,15 @@ var Play = {
     customer.state.onBecomeSick = function() {
       customer.state.foodTypes = [];
       customer.state.sick = true;
+      customer.state.body.play('gtg');
+      customer.state.face.visible = false;
+      //customer.state.face.play("anger");
       customer.state.jumpTween.stop();
       customer.state.scaleStartY = customer.y;
       customer.inputEnabled = true;
       customer.input.enableDrag(false);
       customer.events.onDragStop.add(function() {
-        customer.y = 200; // align with bottom of potties
+        customer.y = 250; // align with bottom of potties
         if (!customer.state.urgeToPurgeTimer) {
           customer.state.urgeToPurgeTimer = setTimeout(function() {
             customer.input.disableDrag();
@@ -472,7 +500,8 @@ var Play = {
     customer.state.messYoself = function () {
       _this.messSound.play();
       _this.makeMess(customer.x - (customer.width /2),
-        customer.y + customer.height + 100);
+        customer.y + customer.height + 180);
+      customer.state.face.play('anger');
       customer.state.leaveScene(1);
     };
 
@@ -516,10 +545,12 @@ var Play = {
 
     potty.state.unoccupy = function(customer) {
       potty.state.occupied = false;
-      customer.visible = true;
       _this.pottyDoorSound.play();
       potty.state.door.play("unoccupied");
-      customer.state.body.play("walk"); // TODO: relieved face?
+      customer.state.face.visible = true;
+      customer.state.face.play('anger');
+      customer.state.body.play("walk");
+      customer.visible = true;
       var toY = customer.y - 10;
       customer.state.jumpTween = game.add.tween(customer).to({y: toY}, Math.random() * 100 + 100, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
       customer.state.leaveScene(1);
@@ -533,15 +564,15 @@ var Play = {
   },
   makeMess: function(x,y) {
     var mess = game.add.sprite(x,y,'mess');
-    mess.scale.setTo(0.25, 0.25);
+    mess.scale.setTo(0.9, 0.9);
     this.poopGroup.add(mess);
+    mess.bringToTop();
 
     return mess;
   },
   playerLost: function() {
     if (game.state.ended) return;
     game.state.ended = true; // prevent repeated calls per frame
-    console.log("YOU LOSE");
     this.sickSound.play();
     while (this.customers.length) {
       this.customers[0].state.leaveScene(1);
@@ -554,7 +585,6 @@ var Play = {
   playerWon: function() {
     if (game.state.ended) return;
     game.state.ended = true;
-    console.log("YOU WIN");
     if (game.state.level > highestLevelBeat) {
       localStorage.setItem("highestLevelBeat", game.state.level + "");
     }
