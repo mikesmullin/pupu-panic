@@ -26,7 +26,7 @@ var LevelSelect = {
         switch (i+1) {
           case 1:
             game.state.cashGoal = 10;
-            game.state.timer = 100;
+            game.state.timer = 20;
             game.state.numCustomerPositions = 2;
             game.state.numFoodItems = 8;
             game.state.customerTypes = [0];
@@ -36,7 +36,7 @@ var LevelSelect = {
 
           case 2:
             game.state.cashGoal = 50;
-            game.state.timer = 100;
+            game.state.timer = 20;
             game.state.numCustomerPositions = 3;
             game.state.numFoodItems = 8;
             game.state.customerTypes = [0];
