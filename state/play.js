@@ -3,7 +3,6 @@ var CUSTOMER_SIZE = 240;
 
 var Play = {
   preload: function() {
-    game.load.image('mess', 'assets/mess.png');
   },
   create: function() {
     game.globals.playLevelMusic();
@@ -42,6 +41,7 @@ var Play = {
     this.pickUpFoodSound = game.add.audio("PickingUpFood", 1.0);
     this.sickSound = game.add.audio("UhOh", 1.0);
     this.winSound = game.add.audio("YouWin", 1.0);
+    this.loseSound = game.add.audio("YouLose", 1.0);
     this.messSound = game.add.audio("MessSound", 1.0);
     this.janitorSound = game.add.audio("Janitor", 3.0);
     this.pottyDoorSound = game.add.audio("PortaPottyOpen", 1.0);
@@ -573,7 +573,7 @@ var Play = {
   playerLost: function() {
     if (game.state.ended) return;
     game.state.ended = true; // prevent repeated calls per frame
-    this.sickSound.play();
+    this.loseSound.play();
     while (this.customers.length) {
       this.customers[0].state.leaveScene(1);
     }

@@ -8,6 +8,8 @@ var Preload = {
     game.load.atlas("Sprites", "assets/Pupu_Assets.png", "assets/Pupu_Assets.json", null, Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.atlas("ExtraSprites", "assets/Title_Screen.png", "assets/Title_Screen.json", null, Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
 
+    game.load.image('mess', 'assets/mess.png');
+
     game.load.audio("TitleMusic", ["assets/Title_Music_mix.mp3", "assets/Title_Music_mix.ogg"]);
     game.load.audio("LevelMusicIntro", ["assets/lvl_Intro_1.mp3", "assets/lvl_Intro_1.ogg"]);
     game.load.audio("LevelMusicLoop", ["assets/lvl_Loop_1.mp3", "assets/lvl_Loop_1.ogg"]);
@@ -24,6 +26,7 @@ var Preload = {
     game.load.audio("ScrollBarClick", ["assets/Scroll_bar_Click_1.mp3", "assets/Scroll_bar_Click_1.ogg"]);
     game.load.audio("UhOh", ["assets/uh_oh_1.mp3", "assets/uh_oh_1.ogg"]);
     game.load.audio("YouWin", ["assets/You_Win_1.mp3", "assets/You_Win_1.ogg"]);
+    game.load.audio("YouLose", ["assets/Lose_1.mp3", "assets/Lose_1.ogg"]);
 
     game.load.audio("Gummibar", ["assets/gummibar_funny_dj.mp3", "assets/gummibar_funny_dj.ogg"]);
 
