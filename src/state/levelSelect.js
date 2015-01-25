@@ -5,6 +5,10 @@ var BUTTON_SIZE = 200;
 var COLS = 3;
 var page_prev, page_next;
 
+var rand = function(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 var LevelSelect = {
   preload: function() {
   },
@@ -147,6 +151,32 @@ var LevelSelect = {
             }
             game.state.pottyTime = function(customer) {
               return 1000 * (5 * Math.random() + 1); // 1 - 5 sec
+            }
+            game.state.foodValue = function(foodType) {
+              return Math.random() * 1 + 1;
+            }
+            game.state.janitorCost = 5;
+            break;
+
+          case 5:
+            game.state.cashGoal = 20;
+            game.state.timer = 33;
+            game.state.numCustomerPositions = 3;
+            game.state.numFoodItems = 8;
+            game.state.customerTypes = [3,1,0,4]
+            game.state.foodTypes = [3,1,0]
+            game.state.numPotties = 3;
+            game.state.makeFood = function() {
+              return {
+                type: Math.floor(Math.random() * game.state.foodTypes.length),
+                rotten: rand(1, 3) == 1
+              }
+            }
+            game.state.spawnCustomer = function() {
+              return true;
+            }
+            game.state.pottyTime = function(customer) {
+              return 1000 * (6 * Math.random() + 3); // 3 - 9 sec
             }
             game.state.foodValue = function(foodType) {
               return Math.random() * 1 + 1;
