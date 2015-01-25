@@ -261,8 +261,12 @@ var Play = {
 
           for (var j = customer.state.foodTypes.length - 1; j >= 0; j --) {
             var foodType = customer.state.foodTypes[j];
-            if (foodType === food.state.foodType) {
-              sick = food.state.rotten;
+            if (customer.state.type == 'Frog' && food.state.rotten) {
+              sick = false;
+              break;
+            }
+            else if (foodType === food.state.foodType && !food.state.rotten) {
+              sick = false;
               break;
             }
           }
@@ -410,6 +414,7 @@ var Play = {
 
     var body = game.add.sprite(0, 0, "Sprites");
     customer.state.body = body;
+    customer.state.type = animName;
     body.animations.add("walk", ["Customer_" + animName + "_Standing_1.png"], 15, true);
     body.animations.add("gtg", ["Customer_" + animName + "_Holding_1.png"], 15, true);
     customer.state.foodTypes = [type];

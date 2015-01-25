@@ -128,6 +128,32 @@ var LevelSelect = {
             game.state.janitorCost = 5;
             break;
 
+          case 4:
+            game.state.cashGoal = 10;
+            game.state.timer = 25;
+            game.state.numCustomerPositions = 3;
+            game.state.numFoodItems = 8;
+            game.state.customerTypes = [2,1,0,4]
+            game.state.foodTypes = [2,1,0,4]
+            game.state.numPotties = 3;
+            game.state.makeFood = function() {
+              return {
+                type: Math.floor(Math.random() * game.state.foodTypes.length),
+                rotten: Math.floor(Math.random() * 2) > 0
+              }
+            }
+            game.state.spawnCustomer = function() {
+              return true;
+            }
+            game.state.pottyTime = function(customer) {
+              return 1000 * (5 * Math.random() + 1); // 1 - 5 sec
+            }
+            game.state.foodValue = function(foodType) {
+              return Math.random() * 1 + 1;
+            }
+            game.state.janitorCost = 5;
+            break;
+
           default:
             return;
         }
