@@ -1,4 +1,4 @@
-var FOOD_ITEM_SIZE = 160;
+var FOOD_ITEM_SIZE = 182;
 var CUSTOMER_SIZE = 240;
 
 var Play = {
@@ -51,37 +51,51 @@ var Play = {
     this.timerText = game.add.text(10, 15, "Time: " + this.displayCash, {fill: "#cc0000", font: "50px Impact"});
     this.scoreText = game.add.text(this.game.width - 360, 15, "Cash: " + this.displayCash + " / " + this.cashGoal.toFixed(2), {fill: "#cc0000", font: "50px Impact"});
 
-    // hacky sweet move tracking
+    // sliding table of foods
     var lastX = -1;
     var lastY = -1;
     var moveAmountX = -1;
     var moveAmountY = -1;
+    var deltaX = 0;
+    var MAX = (((2+game.state.numFoodItems) * FOOD_ITEM_SIZE) - game.width) / 2;
+    var MIN = MAX * -1;
+    var SPEED = 1.8;
     game.input.addMoveCallback(function(pointer, x, y) {
       if (pointer.isDown && y > game.height - 150) {
-        moveAmountX = x - lastX;
-        moveAmountY = y - lastY;
+        x = pointer.clientX;
+        y = pointer.clientY;
+        moveAmountX = (x - lastX) * SPEED;
+        moveAmountY = (y - lastY) * SPEED;
         if (lastX != -1) {
-          this.foodItems.children.forEach(function(foodItem) {
-            // foodItem.body.velocity.x = moveAmountX;
-            foodItem.position.x += moveAmountX;
-            foodItem.state.originalX += moveAmountX;
-            if (foodItem.position.x < game.width / 2 - _this.foodItems.children.length * FOOD_ITEM_SIZE / 2) {
-              foodItem.position.x += _this.foodItems.children.length * FOOD_ITEM_SIZE;
+          var dX = deltaX + moveAmountX
+            , mX = 0;
+          if (moveAmountX > 0) {
+            if (dX < MAX) {
+              mX = moveAmountX;
             }
-            if (foodItem.position.x > game.width / 2 + _this.foodItems.children.length * FOOD_ITEM_SIZE / 2) {
-              foodItem.position.x -= _this.foodItems.children.length * FOOD_ITEM_SIZE;
+            else {
+              mX = MAX - deltaX;
             }
-          });
+          }
+          else if (moveAmountX < 0) {
+            if (dX > MIN) {
+              mX = moveAmountX;
+            }
+            else {
+              mX = MIN - deltaX;
+            }
+          }
+          if (mX != 0 && Math.abs(mX) < 80) {
+            deltaX += mX;
+            this.foodItems.children.forEach(function(foodItem) {
+              foodItem.position.x += mX;
+              foodItem.state.originalX += mX;
+            });
+          }
         }
         lastX = x;
       }
       else {
-        // deccelerate after dragging
-        // if (lastX !== -1 || lastY !== -1) {
-        //   this.foodItems.children.forEach(function(foodItem) {
-        //     foodItem.body.velocity.x = moveAmountX * 10;
-        //   });
-        // }
         lastX = -1;
         lastY = -1;
       }
@@ -111,10 +125,13 @@ var Play = {
       var randomType = this.customerTypes[Math.floor(Math.random() * this.customerTypes.length)]
       var customer = this.makeCustomer(randomType);
       this.customers.push(customer);
-      for (var i = this.numCustomerPositions - 1; i >= 0; i --) {
+      for (var i = this.numCustomerPositions - 1; i >= 0; i--) {
         if (!this.customerPositions[i]) {
-          var padding = 20;
-          var destX = -30 + (game.width + 40) / this.numCustomerPositions * i;
+          var spacing =
+            (game.width - (customer.body.width*this.numCustomerPositions)) / (this.numCustomerPositions + 1);
+          var destX =
+            ((spacing + customer.body.width) * (i+1)) - (customer.body.width/2);
+
           var distance = Math.abs(destX - customer.position.x);
           this.customerPositions[i] = customer;
           game.add.tween(customer)
@@ -129,14 +146,19 @@ var Play = {
       }
     }
 
+    // scale the customer large/small depending on y to give affect
+    // of dragging customer far away into background so they are
+    // proportionally sized with potty
+    var MAX = 1, MIN = .60;
     this.customers.forEach(function(customer) {
       if (customer.state.sick) {
+        game.state.activeCustomer = customer;
         customer.scale.x = customer.scale.y = customer.y / customer.state.scaleStartY * .75 + .25;
-        if (customer.scale.x > 1) {
-          customer.scale.x = customer.scale.y = 1;
+        if (customer.scale.x > MAX) {
+          customer.scale.x = customer.scale.y = MAX;
         }
-        if (customer.scale.x < .5) {
-          customer.scale.x = customer.scale.y = .5;
+        if (customer.scale.x < MIN) {
+          customer.scale.x = customer.scale.y = MIN;
         }
       }
     });
@@ -199,6 +221,20 @@ var Play = {
     }
   },
   render: function() {
+    //game.debug.pointer(game.input.activePointer);
+    //if (game.state.activeCustomer) {
+    //  game.debug.bodyInfo(game.state.activeCustomer, 0, 340, 'rgb(0,0,0)');
+    //}
+    //for (var i in this.customers) {
+    //  var customer = this.customers[i];
+    //  game.debug.body(customer, 'rgba(0,255,0,1)', false);
+    //}
+    //this.pottyGroup.children.forEach(function(potty) {
+    //  game.debug.body(potty, 'rgba(255,0,0,1)', false);
+    //});
+    //this.foodItems.children.forEach(function(food) {
+    //  game.debug.body(food, 'rgba(0,0,255,1)', false);
+    //});
   },
   loadLevel: function() {
     this.cashGoal = game.state.cashGoal;
@@ -210,7 +246,7 @@ var Play = {
     this.foodTypes = game.state.foodTypes;
     for (var i = 0; i < numFoodItems; i ++) {
       var food = this.makeFood();
-      food.position.x = game.width / 2 - FOOD_ITEM_SIZE * numFoodItems / 2 + i * FOOD_ITEM_SIZE;
+      food.state.originalX = food.position.x = game.width / 2 - FOOD_ITEM_SIZE * numFoodItems / 2 + i * FOOD_ITEM_SIZE;
     }
 
     this.numPotties = game.state.numPotties;
@@ -227,18 +263,17 @@ var Play = {
     var _this = this;
     var _the_food = game.state.makeFood();
     var foodType = this.foodTypes[_the_food.type];
-    var food = this.makeFoodSprite(foodType, _the_food.rotten, 0, game.height - FOOD_ITEM_SIZE);
+    var food = this.makeFoodSprite(foodType, _the_food.rotten, 0, game.height - (FOOD_ITEM_SIZE/2));
 
     // set state
     food.state = {originalX: -1, originalY: -1, foodType: foodType,
       rotten: _the_food.rotten };
+    food.state.originalY = food.position.y;
 
     // drag and drop
     food.inputEnabled = true;
-    food.input.enableDrag(false);
+    food.input.enableDrag(true);
     food.events.onDragStart.add(function() {
-      food.state.originalX = food.position.x;
-      food.state.originalY = food.position.y;
       this.pickUpFoodSound.play();
     }, this);
     food.events.onDragStop.add(function() {
@@ -319,7 +354,7 @@ var Play = {
 
         // add new piece of food
         var replacementFood = this.makeFood();
-        replacementFood.x = food.state.originalX;
+        replacementFood.state.originalX = replacementFood.x = food.state.originalX;
         replacementFood.y = game.height;
         game.add.tween(replacementFood)
         .to({x: food.state.originalX, y:food.state.originalY}, 100)
@@ -335,6 +370,8 @@ var Play = {
       }
     }, this);
     game.physics.enable(food, Phaser.Physics.ARCADE);
+    food.body.setSize(50, 50);
+
     // food.body.drag.x = 5;
     // food.body.drag.y = 5;
     this.foodItems.add(food);
@@ -348,6 +385,7 @@ var Play = {
   // 4 - frog
   makeFoodSprite: function(foodType, rotten, x, y) {
     var food = game.add.sprite(x, y, "Sprites");
+    food.anchor.set(.5,.5);
 
     // set animation
     var foodName = "";
@@ -375,7 +413,7 @@ var Play = {
   },
   makeCustomer: function(type) {
     var _this = this;
-    var customer = game.add.sprite(-CUSTOMER_SIZE * 1.5, game.height - CUSTOMER_SIZE * 2.15);
+    var customer = game.add.sprite(-CUSTOMER_SIZE * 1.5, game.height - CUSTOMER_SIZE * 1.2);
 
     // state
     customer.state = {
@@ -433,9 +471,7 @@ var Play = {
     // }
     // customer.addChild(thoughtBubble);
 
-
-
-    var face = game.add.sprite(0, animName == 'Bunny' ? 100 : 10, "Sprites");
+    var face = game.add.sprite(3, animName == 'Bunny' ? 0 : -30, "Sprites");
     customer.state.face = face;
     var emotes = ['Anger', 'Happy', 'Neutral'];
     for (var i=0; i<emotes.length; i++) {
@@ -453,8 +489,10 @@ var Play = {
 
     // physics
     game.physics.enable(customer, Phaser.Physics.ARCADE);
-    customer.body.width = 240;
-    customer.body.height = 200;
+    customer.body.setSize(170, 340, 0, -70);
+    customer.anchor.set(.5, .5);
+    customer.state.body.anchor.set(.5, .5);
+    customer.state.face.anchor.set(.5, 1);
 
     this.customerGroup.add(customer);
 
@@ -463,13 +501,11 @@ var Play = {
       customer.state.sick = true;
       customer.state.body.play('gtg');
       customer.state.face.visible = false;
-      //customer.state.face.play("anger");
       customer.state.jumpTween.stop();
       customer.state.scaleStartY = customer.y;
       customer.inputEnabled = true;
-      customer.input.enableDrag(false);
-      customer.events.onDragStop.add(function() {
-        customer.y = 250; // align with bottom of potties
+      customer.input.enableDrag(true);
+      customer.events.onDragStart.add(function() {
         if (!customer.state.urgeToPurgeTimer) {
           customer.state.urgeToPurgeTimer = setTimeout(function() {
             customer.input.disableDrag();
@@ -477,6 +513,9 @@ var Play = {
             customer.state.messYoself();
           }, 3000);
         }
+      });
+      customer.events.onDragStop.add(function() {
+        customer.y = 380; // align with bottom of potties
         for (var i=0; i<_this.pottyGroup.children.length; i++) {
           var potty = _this.pottyGroup.getChildAt(i);
           game.physics.arcade.overlap(customer, potty, function() {
@@ -501,14 +540,16 @@ var Play = {
 
       var distance = game.width - customer.position.x;
       game.add.tween(customer)
-      .to({x: game.width}, distance * 3.3 * direction)
+      .to({x: game.width+customer.body.width+10*direction}, distance * 5.3)
       .start();
     };
 
     customer.state.messYoself = function () {
+      customer.y = 380; // align with bottom of potties
+      customer.scale.x = customer.scale.y = .6;
       _this.messSound.play();
       _this.makeMess(customer.x - (customer.width /2),
-        customer.y + customer.height + 180);
+        customer.y + customer.height + 80);
       customer.state.face.play('anger');
       customer.state.leaveScene(1);
     };
@@ -583,6 +624,7 @@ var Play = {
     game.state.ended = true; // prevent repeated calls per frame
     this.loseSound.play();
     while (this.customers.length) {
+      this.customers[0].state.face.play('anger');
       this.customers[0].state.leaveScene(1);
     }
     setTimeout(function() {
@@ -598,6 +640,7 @@ var Play = {
     }
     this.winSound.play();
     while (this.customers.length) {
+      this.customers[0].state.face.play('happy');
       this.customers[0].state.leaveScene(1);
     }
     setTimeout(function() {

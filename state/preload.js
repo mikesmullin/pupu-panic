@@ -34,16 +34,24 @@ var Preload = {
     game.globals.playTitleMusic();
     // this will be the first page displayed on load
     game.state.start("Title");
+    /*
+    */
 
     /*
     // uncomment below for faster dev iteration
-    game.state.cashGoal = 100;
-    game.state.timer = 100;
+    game.state.cashGoal = 99;
+    game.state.timer = 99;
     game.state.numCustomerPositions = 3;
     game.state.numFoodItems = 8;
     game.state.customerTypes = [0, 1, 2, 3, 4];
     game.state.foodTypes = [0, 1, 2, 3, 4];
     game.state.numPotties = 2;
+    game.state.makeFood = function() {
+      return {
+        type: Math.floor(Math.random() * game.state.foodTypes.length),
+        rotten: Math.random() * 2 < 1
+      }
+    }
     game.state.spawnCustomer = function() {
       return true;
     }

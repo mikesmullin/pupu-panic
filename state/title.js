@@ -8,7 +8,7 @@ var Title = {
         //game.scale.stopFullScreen(); // use esc to toggle instead
       }
       else {
-        game.scale.startFullScreen(false);
+        //game.scale.startFullScreen(false);
       }
     }, this);
 
