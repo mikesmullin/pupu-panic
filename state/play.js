@@ -43,13 +43,13 @@ var Play = {
     this.winSound = game.add.audio("YouWin", 1.0);
     this.loseSound = game.add.audio("YouLose", 1.0);
     this.messSound = game.add.audio("MessSound", 1.0);
-    this.janitorSound = game.add.audio("Janitor", 3.0);
+    this.janitorSound = game.add.audio("Janitor", 4.0);
     this.pottyDoorSound = game.add.audio("PortaPottyOpen", 1.0);
-    this.moneyLostSound = game.add.audio("MoneyLost", 1.0);
+    this.moneyLostSound = game.add.audio("MoneyLost", 6.0);
 
     this.loadLevel();
-    this.timerText = game.add.text(10, 15, "Time: " + this.displayCash, {fill: "#cc0000", font: "50px Impact"});
-    this.scoreText = game.add.text(this.game.width - 360, 15, "Cash: " + this.displayCash + " / " + this.cashGoal.toFixed(2), {fill: "#cc0000", font: "50px Impact"});
+    this.timerText = game.add.text(10, 15, "", {fill: "#cc0000", font: "50px Impact"});
+    this.scoreText = game.add.text(this.game.width - 360, 15, "", {fill: "#cc0000", font: "50px Impact"});
 
     // sliding table of foods
     var lastX = -1;
@@ -105,10 +105,9 @@ var Play = {
     var _this = this;
 
     // update cash text
-    if (this.displayCash !== this.cash) {
-      this.scoreText.text = "Cash: " + this.displayCash.toFixed(2) + " / " + this.cashGoal.toFixed(2);
-    }
+    this.scoreText.text = "Cash: " + this.displayCash.toFixed(2) + " / " + this.cashGoal.toFixed(2);
 
+    // update timer text
     if (!game.state.ended) {
       this.timer -= .01;
       this.timerText.text = "Time: " + this.timer.toFixed(2);
@@ -191,10 +190,7 @@ var Play = {
         .to({alpha: 0}, 4500)
         .start();
         tween2.onComplete.add(function() {
-          console.log('before: ', _this.cash);
-          _this.cash -= game.state.janitorCost;
-          console.log('after: ', _this.cash);
-          _this.moneyLostSound.play()
+          _this.adjustCash(game.state.janitorCost * -1);
           _this.poopGroup.remove(targetMess);
           _this.janitor.play("walk");
           if (!_this.poopGroup.children.length) {
@@ -335,18 +331,7 @@ var Play = {
 
         if (customer.state.foodTypes.length === 0 && !sick) {
           var cashWon = game.state.foodValue(foodEaten.state.type);
-          // TODO: make a cash particle
-          this.cash += cashWon;
-          this.moneyGainedSound.play();
-          if (this.cash >= this.cashGoal) {
-            this.playerWon();
-          }
-          else if (this.cash < 0) {
-            this.playerLost();
-          }
-          game.add.tween(this)
-          .to({displayCash: this.cash}, 250)
-          .start();
+          this.adjustCash(cashWon);
 
           // send customer off screen to right
           customer.state.leaveScene(1);
@@ -618,6 +603,30 @@ var Play = {
     mess.bringToTop();
 
     return mess;
+  },
+  adjustCash: function(delta) {
+    // TODO: make a cash particle
+    this.cash += delta;
+    if (delta > 0) {
+      this.moneyGainedSound.play();
+    }
+    else {
+      this.moneyLostSound.play();
+    }
+    if (this.cash >= this.cashGoal) {
+      this.playerWon();
+    }
+    else if (this.cash < 0) {
+      this.playerLost();
+    }
+
+    // animate change in cash
+    game.add.tween(this)
+    .to({ displayCash: this.cash }, 250)
+    .start()
+    .onComplete.add(function() {
+      this.displayCash = this.cash;
+    });
   },
   playerLost: function() {
     if (game.state.ended) return;
