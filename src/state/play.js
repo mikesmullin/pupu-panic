@@ -38,7 +38,7 @@ var Play = {
     // audio
     this.eatSound = game.add.audio("EatingFood", 1.0);
     this.moneyGainedSound = game.add.audio("MoneyGained", 1.0);
-    this.pickUpFoodSound = game.add.audio("PickingUpFood", 1.0);
+    this.pickUpFoodSound = game.add.audio("PickingUpFood", .7);
     this.sickSound = game.add.audio("UhOh", 1.0);
     this.winSound = game.add.audio("YouWin", 1.0);
     this.loseSound = game.add.audio("YouLose", 1.0);
