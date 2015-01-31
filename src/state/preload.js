@@ -9,6 +9,8 @@ var Preload = {
     game.load.atlas("ExtraSprites", "assets/Title_Screen.png", "assets/Title_Screen.json", null, Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
 
     game.load.image('mess', 'assets/mess.png');
+    game.load.image('CashPlus', 'assets/cash_plus.png');
+    game.load.image('CashMinus', 'assets/cash_minus.png');
 
     game.load.audio("TitleMusic", ["assets/Title_Music_mix.ogg", "assets/Title_Music_mix.m4a"]);
     game.load.audio("LevelMusicIntro", ["assets/lvl_Intro_1.ogg", "assets/lvl_Intro_1.m4a"]);

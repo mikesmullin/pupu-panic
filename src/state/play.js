@@ -47,6 +47,20 @@ var Play = {
     this.pottyDoorSound = game.add.audio("PortaPottyOpen", 1.0);
     this.moneyLostSound = game.add.audio("MoneyLost", 6.0);
 
+    var emitterTypes = ['Plus','Minus'], emitterLifespan = 2000;
+    for (var i in emitterTypes) {
+      var type = emitterTypes[i]
+        , emitter = this['cash'+type+'Emitter'] = game.add.emitter(0, 0, 10);
+      emitter.makeParticles('Cash'+type);
+      emitter.setAlpha(1, 0, emitterLifespan, Phaser.Easing.Cubic.In);
+      emitter.setScale(1, 3, 1, 3, emitterLifespan, Phaser.Easing.Linear.None);
+      emitter.setRotation(1, 3);
+      emitter.gravity = 0;
+      emitter.minParticleSpeed.setTo(40, -100);
+      emitter.maxParticleSpeed.setTo(-40, -200);
+      emitter.lifespan = emitterLifespan;
+    }
+
     this.loadLevel();
     this.timerText = game.add.text(10, 15, "", {fill: "#cc0000", font: "50px Impact"});
     this.scoreText = game.add.text(this.game.width - 360, 15, "", {fill: "#cc0000", font: "50px Impact"});
@@ -187,10 +201,10 @@ var Play = {
         _this.janitorSound.play();
         _this.janitor.play("mop");
         var tween2 = game.add.tween(targetMess)
-        .to({alpha: 0}, 4500)
+        .to({alpha: 0}, 3000)
         .start();
         tween2.onComplete.add(function() {
-          _this.adjustCash(game.state.janitorCost * -1);
+          _this.adjustCash(game.state.janitorCost * -1, targetMess);
           _this.poopGroup.remove(targetMess);
           _this.janitor.play("walk");
           if (!_this.poopGroup.children.length) {
@@ -331,7 +345,7 @@ var Play = {
 
         if (customer.state.foodTypes.length === 0 && !sick) {
           var cashWon = game.state.foodValue(foodEaten.state.type);
-          this.adjustCash(cashWon);
+          this.adjustCash(cashWon, customer);
 
           // send customer off screen to right
           customer.state.leaveScene(1);
@@ -534,7 +548,7 @@ var Play = {
       customer.scale.x = customer.scale.y = .6;
       _this.messSound.play();
       _this.makeMess(customer.x - (customer.width /2),
-        customer.y + customer.height + 80);
+        customer.y + customer.height + 60);
       customer.state.face.play('anger');
       customer.state.leaveScene(1);
     };
@@ -604,14 +618,21 @@ var Play = {
 
     return mess;
   },
-  adjustCash: function(delta) {
-    // TODO: make a cash particle
+  adjustCash: function(delta, source) {
     this.cash += delta;
+    var x = source.body ? source.body.center.x : source.x + (source.width/2),
+        y = source.body ? source.body.y : source.y;
     if (delta > 0) {
       this.moneyGainedSound.play();
+      this.cashPlusEmitter.x = x;
+      this.cashPlusEmitter.y = y;
+      this.cashPlusEmitter.emitParticle();
     }
     else {
       this.moneyLostSound.play();
+      this.cashMinusEmitter.x = x;
+      this.cashMinusEmitter.y = y;
+      this.cashMinusEmitter.emitParticle();
     }
     if (this.cash >= this.cashGoal) {
       this.playerWon();
