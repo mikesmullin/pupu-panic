@@ -9,6 +9,8 @@ var Preload = {
     game.load.atlas("ExtraSprites", "assets/Title_Screen.png", "assets/Title_Screen.json", null, Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
 
     game.load.image('mess', 'assets/mess.png');
+    game.load.image('CashPlus', 'assets/cash_plus.png');
+    game.load.image('CashMinus', 'assets/cash_minus.png');
 
     game.load.audio("TitleMusic", ["assets/Title_Music_mix.ogg", "assets/Title_Music_mix.m4a"]);
     game.load.audio("LevelMusicIntro", ["assets/lvl_Intro_1.ogg", "assets/lvl_Intro_1.m4a"]);
@@ -28,39 +30,39 @@ var Preload = {
     game.load.audio("YouLose", ["assets/Lose_1.ogg", "assets/Lose_1.m4a"]);
   },
   create: function() {
-    game.globals.playTitleMusic();
-    // this will be the first page displayed on load
-    game.state.start("Title");
-    /*
-    */
+    game.state.debug = false;
 
-    /*
-    // uncomment below for faster dev iteration
-    game.state.cashGoal = 99;
-    game.state.timer = 99;
-    game.state.numCustomerPositions = 3;
-    game.state.numFoodItems = 8;
-    game.state.customerTypes = [0, 1, 2, 3, 4];
-    game.state.foodTypes = [0, 1, 2, 3, 4];
-    game.state.numPotties = 2;
-    game.state.makeFood = function() {
-      return {
-        type: Math.floor(Math.random() * game.state.foodTypes.length),
-        rotten: Math.random() * 2 < 1
+    if (!game.state.debug) {
+      game.globals.playTitleMusic();
+      // this will be the first page displayed on load
+      game.state.start("Title");
+    }
+    else {
+      game.state.cashGoal = 99;
+      game.state.timer = 99;
+      game.state.numCustomerPositions = 3;
+      game.state.numFoodItems = 8;
+      game.state.customerTypes = [0, 1, 2, 3, 4];
+      game.state.foodTypes = [0, 1, 2, 3, 4];
+      game.state.numPotties = 2;
+      game.state.makeFood = function() {
+        return {
+          type: Math.floor(Math.random() * game.state.foodTypes.length),
+          rotten: false //Math.random() * 2 < 1
+        }
       }
+      game.state.spawnCustomer = function() {
+        return true;
+      }
+      game.state.pottyTime = function(customer) {
+        return 1000;
+      }
+      game.state.foodValue = function(foodType) {
+        return Math.random() * 1 + 1;
+      }
+      game.state.janitorCost = 5;
+      game.state.start("Play");
     }
-    game.state.spawnCustomer = function() {
-      return true;
-    }
-    game.state.pottyTime = function(customer) {
-      return 1000;
-    }
-    game.state.foodValue = function(foodType) {
-      return Math.random() * 1 + 1;
-    }
-    game.state.janitorCost = 5;
-    game.state.start("Play");
-    */
   },
   update: function() {
   },
