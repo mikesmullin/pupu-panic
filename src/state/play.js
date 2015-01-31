@@ -225,16 +225,16 @@ var Play = {
     //if (game.state.activeCustomer) {
     //  game.debug.bodyInfo(game.state.activeCustomer, 0, 340, 'rgb(0,0,0)');
     //}
-    for (var i in this.customers) {
-      var customer = this.customers[i];
-      game.debug.body(customer, 'rgba(0,255,0,1)', false);
-    }
-    this.pottyGroup.children.forEach(function(potty) {
-      game.debug.body(potty, 'rgba(255,0,0,1)', false);
-    });
-    this.foodItems.children.forEach(function(food) {
-      game.debug.body(food, 'rgba(0,0,255,1)', false);
-    });
+    //for (var i in this.customers) {
+    //  var customer = this.customers[i];
+    //  game.debug.body(customer, 'rgba(0,255,0,1)', false);
+    //}
+    //this.pottyGroup.children.forEach(function(potty) {
+    //  game.debug.body(potty, 'rgba(255,0,0,1)', false);
+    //});
+    //this.foodItems.children.forEach(function(food) {
+    //  game.debug.body(food, 'rgba(0,0,255,1)', false);
+    //});
   },
   loadLevel: function() {
     this.cashGoal = game.state.cashGoal;

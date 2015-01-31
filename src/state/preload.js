@@ -31,12 +31,13 @@ var Preload = {
     game.load.audio("Gummibar", ["assets/gummibar_funny_dj.mp3", "assets/gummibar_funny_dj.ogg"]);
   },
   create: function() {
-    /*
     game.globals.playTitleMusic();
     // this will be the first page displayed on load
     game.state.start("Title");
+    /*
     */
 
+    /*
     // uncomment below for faster dev iteration
     game.state.cashGoal = 99;
     game.state.timer = 99;
@@ -62,7 +63,6 @@ var Preload = {
     }
     game.state.janitorCost = 5;
     game.state.start("Play");
-    /*
     */
   },
   update: function() {
