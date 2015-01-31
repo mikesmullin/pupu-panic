@@ -48,7 +48,7 @@ var Preload = {
     game.state.makeFood = function() {
       return {
         type: Math.floor(Math.random() * game.state.foodTypes.length),
-        rotten: false
+        rotten: Math.random() * 2 < 1
       }
     }
     game.state.spawnCustomer = function() {
