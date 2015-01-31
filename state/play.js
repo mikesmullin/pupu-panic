@@ -515,10 +515,13 @@ var Play = {
       });
       customer.events.onDragStop.add(function() {
         customer.y = 380; // align with bottom of potties
+        var occupied = false;
         for (var i=0; i<_this.pottyGroup.children.length; i++) {
+          if (occupied) { return; }
           var potty = _this.pottyGroup.getChildAt(i);
           game.physics.arcade.overlap(customer, potty, function() {
             potty.state.occupy(customer);
+            occupied = true;
           });
         }
       });
