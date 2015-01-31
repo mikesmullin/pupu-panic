@@ -13,7 +13,6 @@ var Preload = {
     game.load.audio("TitleMusic", ["assets/Title_Music_mix.ogg", "assets/Title_Music_mix.m4a"]);
     game.load.audio("LevelMusicIntro", ["assets/lvl_Intro_1.ogg", "assets/lvl_Intro_1.m4a"]);
     game.load.audio("LevelMusicLoop", ["assets/lvl_Loop_1.ogg", "assets/lvl_Loop_1.m4a"]);
-
     game.load.audio("ButtonClick", ["assets/Button_Click_1.ogg", "assets/Button_Click_1.m4a"]);
     game.load.audio("EatingFood", ["assets/Eating_Food_1.ogg", "assets/Eating_Food_1.m4a"]);
     game.load.audio("FindingPotty", ["assets/Finding_Potty.ogg", "assets/Finding_Potty.m4a"]);
@@ -27,8 +26,6 @@ var Preload = {
     game.load.audio("UhOh", ["assets/uh_oh_1.ogg", "assets/uh_oh_1.m4a"]);
     game.load.audio("YouWin", ["assets/You_Win_1.ogg", "assets/You_Win_1.m4a"]);
     game.load.audio("YouLose", ["assets/Lose_1.ogg", "assets/Lose_1.m4a"]);
-
-    game.load.audio("Gummibar", ["assets/gummibar_funny_dj.ogg", "assets/gummibar_funny_dj.m4a"]);
   },
   create: function() {
     game.globals.playTitleMusic();
