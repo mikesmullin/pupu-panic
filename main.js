@@ -25,7 +25,9 @@ game.globals = {
 
       game.globals.levelIntroMusic = game.add.audio("LevelMusicIntro", 0.33, false);
       game.globals.levelIntroMusic.onStop.add(function() {
-        game.globals.levelLoopMusic.play();
+        if (game.globals.levelLoopMusic) {
+          game.globals.levelLoopMusic.play();
+        }
       });
       game.globals.levelLoopMusic = game.add.audio("LevelMusicLoop", 0.33, true);
       game.globals.levelIntroMusic.play();
@@ -38,6 +40,7 @@ game.state.add("Preload", Preload);
 game.state.add("Title", Title);
 game.state.add("Credits", Credits);
 game.state.add("LevelSelect", LevelSelect);
+game.state.add("Goal", Goal);
 game.state.add("Play", Play);
 game.state.start("Boot");
 
