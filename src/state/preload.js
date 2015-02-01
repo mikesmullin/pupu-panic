@@ -34,9 +34,9 @@ var Preload = {
     game.load.audio("YouLose", ["assets/Lose_1.ogg", "assets/Lose_1.m4a"]);
   },
   create: function() {
-    game.state.debug = 0;
+    game.state.debug = 1;
 
-    if (!game.state.debug) {
+    if (true || !game.state.debug) {
       game.globals.playTitleMusic();
       // this will be the first page displayed on load
       game.state.start("Title");

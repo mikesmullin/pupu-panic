@@ -64,7 +64,7 @@ var Play = {
 
     this.loadLevel();
     this.timerText = game.add.text(30, 30, "", {fill: "#252525", font: "50px Bangers"});
-    this.scoreText = game.add.text(this.game.width - 230, 30, "", {fill: "#252525", font: "50px Bangers"});
+    this.cashText = game.add.text(this.game.width - 230, 30, "", {fill: "#252525", font: "50px Bangers"});
 
     // sliding table of foods
     var lastX = -1;
@@ -120,13 +120,14 @@ var Play = {
     var _this = this;
 
     // update cash text
-    this.scoreText.text = "Cash " + this.displayCash.toFixed(0) + "/" + this.cashGoal.toFixed(0) + " ";
+    this.cashText.text = "Cash " + this.displayCash.toFixed(0) + "/" + this.cashGoal.toFixed(0) + " ";
 
     // update timer text
     if (!game.state.ended) {
       this.timer -= .01;
       this.timerText.text = "Time " + this.timer.toFixed(0) + " ";
       if (this.timer <= 0) {
+        this.timerText.addColor('#c00', 0);
         this.playerLost();
       }
     }
@@ -273,7 +274,7 @@ var Play = {
   makeFood: function() {
     var _this = this;
     var _the_food = game.state.makeFood();
-    var foodType = this.foodTypes[_the_food.type];
+    var foodType = _the_food.type;
     var food = this.makeFoodSprite(foodType, _the_food.rotten, 0, game.height - (FOOD_ITEM_SIZE/2));
 
     // set state
@@ -503,16 +504,16 @@ var Play = {
       customer.state.face.visible = false;
       customer.state.jumpTween.stop();
       customer.state.scaleStartY = customer.y;
+      if (!customer.state.urgeToPurgeTimer) {
+        customer.state.urgeToPurgeTimer = setTimeout(function() {
+          customer.input.disableDrag();
+          customer.input.stop();
+          customer.state.messYoself();
+        }, 3000);
+      }
       customer.inputEnabled = true;
       customer.input.enableDrag(true);
       customer.events.onDragStart.add(function() {
-        if (!customer.state.urgeToPurgeTimer) {
-          customer.state.urgeToPurgeTimer = setTimeout(function() {
-            customer.input.disableDrag();
-            customer.input.stop();
-            customer.state.messYoself();
-          }, 3000);
-        }
       });
       customer.events.onDragStop.add(function() {
         customer.y = 380; // align with bottom of potties
@@ -542,6 +543,7 @@ var Play = {
       }
 
       var distance = game.width - customer.position.x;
+      if (!customer.body) return; // scene shutdown
       game.add.tween(customer)
       .to({x: game.width+customer.body.width+10*direction}, distance * 5.3)
       .start();
@@ -642,6 +644,7 @@ var Play = {
       this.playerWon();
     }
     else if (this.cash < 0) {
+      this.cashText.addColor('#c00', 0);
       this.playerLost();
     }
 
@@ -661,6 +664,7 @@ var Play = {
       this.customers[0].state.face.play('anger');
       this.customers[0].state.leaveScene(1);
     }
+
     setTimeout(function() {
       game.state.ended = false;
       game.state.start("Title");
