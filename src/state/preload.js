@@ -34,7 +34,7 @@ var Preload = {
     game.load.audio("YouLose", ["assets/Lose_1.ogg", "assets/Lose_1.m4a"]);
   },
   create: function() {
-    game.state.debug = 1;
+    game.state.debug = 0;
 
     if (true || !game.state.debug) {
       game.globals.playTitleMusic();
