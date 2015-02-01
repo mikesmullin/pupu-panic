@@ -22,6 +22,7 @@ var Play = {
 
     // ui components
     this.game.add.sprite(0, 0, "ExtraSprites", "Background_Gameplay_1.png");
+    //this.game.add.sprite(0, 0, "ExtraSprites", "Awning_1.png");
     this.pottyGroup = game.add.group();
     this.poopGroup = game.add.group();
 
@@ -62,8 +63,8 @@ var Play = {
     }
 
     this.loadLevel();
-    this.timerText = game.add.text(10, 15, "", {fill: "#cc0000", font: "50px Impact"});
-    this.scoreText = game.add.text(this.game.width - 360, 15, "", {fill: "#cc0000", font: "50px Impact"});
+    this.timerText = game.add.text(30, 30, "", {fill: "#252525", font: "50px Bangers"});
+    this.scoreText = game.add.text(this.game.width - 230, 30, "", {fill: "#252525", font: "50px Bangers"});
 
     // sliding table of foods
     var lastX = -1;
@@ -119,12 +120,12 @@ var Play = {
     var _this = this;
 
     // update cash text
-    this.scoreText.text = "Cash: " + this.displayCash.toFixed(2) + " / " + this.cashGoal.toFixed(2);
+    this.scoreText.text = "Cash " + this.displayCash.toFixed(0) + "/" + this.cashGoal.toFixed(0) + " ";
 
     // update timer text
     if (!game.state.ended) {
       this.timer -= .01;
-      this.timerText.text = "Time: " + this.timer.toFixed(2);
+      this.timerText.text = "Time " + this.timer.toFixed(0) + " ";
       if (this.timer <= 0) {
         this.playerLost();
       }
@@ -624,7 +625,7 @@ var Play = {
   adjustCash: function(delta, source) {
     this.cash += delta;
     var x = source.body ? source.body.center.x : source.x + (source.width/2),
-        y = source.body ? source.body.y : source.y;
+        y = (source.body ? source.body.y : source.y) + 40;
     if (delta > 0) {
       this.moneyGainedSound.play();
       this.cashPlusEmitter.x = x;

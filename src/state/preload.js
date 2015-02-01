@@ -1,6 +1,9 @@
 var Preload = {
   preload: function() {
-    game.background = game.add.sprite(game.width / 2 - 50, game.height / 2 - 40, "Loading");
+    game.background = game.add.sprite(game.world.centerX, game.world.centerY - 90, "Loading");
+    game.background.anchor.set(.5, .5)
+    game.background.scale.x = 2;
+    game.background.scale.y = 2;
     var preloadBar = game.add.sprite(0, game.height / 2 - 10, "PreloadBar");
     game.load.setPreloadSprite(preloadBar, 0);
 
@@ -11,6 +14,7 @@ var Preload = {
     game.load.image('mess', 'assets/mess.png');
     game.load.image('CashPlus', 'assets/cash_plus.png');
     game.load.image('CashMinus', 'assets/cash_minus.png');
+    game.load.image('Credits', 'assets/credits.png');
 
     game.load.audio("TitleMusic", ["assets/Title_Music_mix.ogg", "assets/Title_Music_mix.m4a"]);
     game.load.audio("LevelMusicIntro", ["assets/lvl_Intro_1.ogg", "assets/lvl_Intro_1.m4a"]);
@@ -30,7 +34,7 @@ var Preload = {
     game.load.audio("YouLose", ["assets/Lose_1.ogg", "assets/Lose_1.m4a"]);
   },
   create: function() {
-    game.state.debug = false;
+    game.state.debug = 0;
 
     if (!game.state.debug) {
       game.globals.playTitleMusic();
@@ -58,7 +62,7 @@ var Preload = {
         return 1000;
       }
       game.state.foodValue = function(foodType) {
-        return Math.random() * 1 + 1;
+        return 1;
       }
       game.state.janitorCost = 5;
       game.state.start("Play");

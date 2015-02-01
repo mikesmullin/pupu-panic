@@ -1,6 +1,6 @@
 var level_buttons = [];
 var LEVELS = 9;
-var PADDING = 38;
+var PADDING = 40;
 var BUTTON_SIZE = 200;
 var COLS = 3;
 var page_prev, page_next;
@@ -18,7 +18,8 @@ var LevelSelect = {
 
     game.globals.playTitleMusic();
     var _this = this;
-    this.game.add.sprite(0, 0, "ExtraSprites", "Background_Gameplay_1.png");
+    //this.game.add.sprite(0, 0, "ExtraSprites", "Background_Gameplay_1.png");
+    game.stage.backgroundColor = '#a1dff2'
     this.sfxButtonClick = game.add.audio("ButtonClick", 1.0);
 
     if (highestLevelBeat + 1 < LEVELS) {
@@ -193,15 +194,15 @@ var LevelSelect = {
     }
 
     var w = 200, h = 80;
-    // page_prev = this.game.add.sprite(
-    //   PADDING,
-    //   game.height - PADDING - h,
-    //   "Sprites", "Food_CarrotBun_Good_1.png");
-    // page_prev.inputEnabled = true;
-    // page_prev.events.onInputDown.add(function() {
-    //   _this.sfxButtonClick.play();
-    //   game.state.start("Title");
-    // });
+    page_prev = this.game.add.sprite(
+      PADDING,
+      game.height - PADDING - h,
+      "Sprites", "Food_CarrotBun_Good_1.png");
+    page_prev.inputEnabled = true;
+    page_prev.events.onInputDown.add(function() {
+      _this.sfxButtonClick.play();
+      game.state.start("Title");
+    });
     // page_next = this.game.add.sprite(
     //   game.width - PADDING - w,
     //   game.height - PADDING - h,
@@ -222,11 +223,11 @@ var LevelSelect = {
         rect.x+25,
         rect.y+125,
         '#000000',
-        '80px arial');
+        '80px Bangers');
     }
 
-    // game.debug.text('prev', page_prev.x, page_prev.y+60, '#000000', '80px arial');
-    // game.debug.text('next', page_next.x, page_next.y+60, '#000000', '80px arial');
+    game.debug.text('back', page_prev.x, page_prev.y+60, '#000000', '80px Bangers');
+    // game.debug.text('next', page_next.x, page_next.y+60, '#000000', '80px Bangers');
   },
   // onSwipe: function() {
   //   if (Phaser.Point.distance(game.input.activePointer.position, game.input.activePointer.positionDown) > 150 && game.input.activePointer.duration > 100 && game.input.activePointer.duration < 250) {
