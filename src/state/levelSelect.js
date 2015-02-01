@@ -58,7 +58,7 @@ var LevelSelect = {
           case 1:
             hints = [
               "Rabbits are hungry.",
-              "Time is short."];
+              "The fair closes soon."];
             cashGoal    = 3; timeGoal    = 10;
             numCust     = 1; custTypes   = [0];
             tableSize   = 1; foodTypes   = [0];
@@ -74,9 +74,7 @@ var LevelSelect = {
 
           case 2:
             hints = [
-              "Do NOT feed rabbits meat."];
-              //"Sometimes its all ya got."];
-              //"Sanitation isn't free."]
+              "Do not feed rabbits meat."];
             cashGoal    = 10; timeGoal    = 30;
             numCust     = 2;  custTypes   = [0];
             tableSize   = 3;  foodTypes   = [0,2];
@@ -91,6 +89,22 @@ var LevelSelect = {
             break;
 
           case 3:
+            hints = [
+              "Not everyone likes veggies."];
+            cashGoal    = 20; timeGoal    = 30;
+            numCust     = 3;  custTypes   = [0,2];
+            tableSize   = 4;  foodTypes   = [0,2];
+            foodTypeFn  = function() { return {
+              type:   select(foodTypes),
+              rotten: false }}
+            pottyCount  = 1;
+            custSpawnFn = function() { return true; }
+            pottyTimeFn = function() { return rand(6,9)*1000; }
+            foodValueFn = function(foodType) { return 1; }
+            janitorCost = 2;
+            break;
+
+          case 4:
             var pottyFlag = 0;
             hints = [
               "Janitors cost money."]
@@ -112,6 +126,23 @@ var LevelSelect = {
             }
             foodValueFn = function(foodType) { return 1; }
             janitorCost = 2;
+            break;
+
+          case 5:
+            hints = [
+              "Something smells.",
+              "Its not the customers."];
+            cashGoal    = 20;  timeGoal    = 40;
+            numCust     = 3;  custTypes   = [0,2];
+            tableSize   = 6;  foodTypes   = [0,2];
+            foodTypeFn  = function() { return {
+              type:   select(foodTypes),
+              rotten: chance(1,2) }}
+            pottyCount  = 1;
+            custSpawnFn = function() { return true; }
+            pottyTimeFn = function() { return rand(6,9)*1000; }
+            foodValueFn = function(foodType) { return 1; }
+            janitorCost = 3;
             break;
 
           default:
