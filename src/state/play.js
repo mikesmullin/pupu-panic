@@ -309,11 +309,14 @@ var Play = {
           for (var j = customer.state.foodTypes.length - 1; j >= 0; j --) {
             var foodType = customer.state.foodTypes[j];
             if (customer.state.type == 'Frog' && food.state.rotten) {
-              sick = false;
+              sick = false; // frogs can eat anything rotten
               break;
             }
+            else if (customer.state.type == 'Dog' && foodType === food.state.foodType && food.state.rotten) {
+              sick = false; // dogs can eat rotten meat and bones
+            }
             else if (foodType === food.state.foodType && !food.state.rotten) {
-              sick = false;
+              sick = false; // others can only eat their food type when its not rotten
               break;
             }
           }
