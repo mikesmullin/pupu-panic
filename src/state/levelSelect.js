@@ -54,6 +54,25 @@ var LevelSelect = {
           pottyTimeFn, custSpawnFn, foodValueFn, janitorCost,
           hints;
         game.state.level = i + 1;
+
+        var spawnCustomer = false;
+        var newCustomerTimer = null;
+        var customerDelayMin = 0;
+        var customerDelayMax = 0;
+        var nextCustomer = function() {
+          if (newCustomerTimer === null) {
+            newCustomerTimer = setTimeout(function() {
+              clearTimeout(newCustomerTimer);
+              newCustomerTimer = null;
+              spawnCustomer = true;
+            }, rand(customerDelayMin, customerDelayMax)*1000);
+          }
+          if (spawnCustomer) {
+            spawnCustomer = false;
+            return true;
+          }
+        };
+
         switch (i+1) {
           case 1:
             hints = [
@@ -66,6 +85,7 @@ var LevelSelect = {
               type:   select(foodTypes),
               rotten: false }}
             pottyCount  = 0;
+            customerDelayMin = 0; customerDelayMax = 0;
             custSpawnFn = function() { return true; }
             pottyTimeFn = function() { return 1000; }
             foodValueFn = function(foodType) { return 1; }
@@ -82,6 +102,7 @@ var LevelSelect = {
               type:   chance(2,5) ? 2 : 0,
               rotten: false }}
             pottyCount  = 1;
+            customerDelayMin = 0; customerDelayMax = 0;
             custSpawnFn = function() { return true; }
             pottyTimeFn = function() { return 5000; }
             foodValueFn = function(foodType) { return 1; }
@@ -98,6 +119,7 @@ var LevelSelect = {
               type:   select(foodTypes),
               rotten: false }}
             pottyCount  = 1;
+            customerDelayMin = 0; customerDelayMax = 0;
             custSpawnFn = function() { return true; }
             pottyTimeFn = function() { return rand(6,9)*1000; }
             foodValueFn = function(foodType) { return 1; }
@@ -119,6 +141,7 @@ var LevelSelect = {
               pottyFlag = 0;
               return r; }
             pottyCount  = 2;
+            customerDelayMin = 0; customerDelayMax = 0;
             custSpawnFn = function() { return true; }
             pottyTimeFn = function() {
               pottyFlag = 1;
@@ -132,17 +155,89 @@ var LevelSelect = {
             hints = [
               "Something smells.",
               "Its not the customers."];
-            cashGoal    = 20;  timeGoal    = 40;
+            cashGoal    = 20;  timeGoal   = 40;
             numCust     = 3;  custTypes   = [0,2];
             tableSize   = 6;  foodTypes   = [0,2];
             foodTypeFn  = function() { return {
               type:   select(foodTypes),
               rotten: chance(1,2) }}
             pottyCount  = 1;
-            custSpawnFn = function() { return true; }
+            customerDelayMin = 1; customerDelayMax = 1;
+            custSpawnFn = function() { return nextCustomer(); }
             pottyTimeFn = function() { return rand(6,9)*1000; }
             foodValueFn = function(foodType) { return 1; }
             janitorCost = 3;
+            break;
+
+          case 6:
+            hints = [
+              "Frogs will try anything."];
+            cashGoal    = 20;  timeGoal   = 35;
+            numCust     = 4;  custTypes   = [1,4];
+            tableSize   = 6;  foodTypes   = [1,4];
+            foodTypeFn  = function() { return {
+              type:   select(foodTypes),
+              rotten: chance(1,2) }}
+            pottyCount  = 2;
+            customerDelayMin = 1; customerDelayMax = 1;
+            custSpawnFn = function() { return nextCustomer(); }
+            pottyTimeFn = function() { return rand(7,12)*1000; }
+            foodValueFn = function(foodType) { return 1; }
+            janitorCost = 5;
+            break;
+
+          case 7:
+            hints = [
+              "New manager.",
+              "She's terrible at inventory."];
+            cashGoal    = 16; timeGoal   = 50;
+            numCust     = 3;  custTypes   = [2,3];
+            tableSize   = 6;  foodTypes   = [2,3,1];
+            foodTypeFn  = function() { return {
+              type:   select(foodTypes),
+              rotten: chance(1,5) }}
+            pottyCount  = 4;
+            customerDelayMin = 1; customerDelayMax = 1;
+            custSpawnFn = function() { return nextCustomer(); }
+            pottyTimeFn = function() { return rand(7,12)*1000; }
+            foodValueFn = function(foodType) { return 1; }
+            janitorCost = 5;
+            break;
+
+          case 8:
+            hints = [
+              "Memorize food placement.",
+              "Timing is everything."];
+            cashGoal    = 20;  timeGoal   = 60;
+            numCust     = 4;  custTypes   = [3,0];
+            tableSize   = 16; foodTypes   = [3,0,2];
+            foodTypeFn  = function() { return {
+              type:   select(foodTypes),
+              rotten: chance(1,5) }}
+            pottyCount  = 4;
+            customerDelayMin = 3; customerDelayMax = 5;
+            custSpawnFn = function() { return nextCustomer(); }
+            pottyTimeFn = function() { return rand(10,15)*1000; }
+            foodValueFn = function(foodType) { return 1; }
+            janitorCost = 5;
+            break;
+
+          case 9:
+            hints = [
+              "Last level!",
+              "Keep it together."];
+            cashGoal    = 50;  timeGoal  = 140;
+            numCust     = 4;  custTypes  = [0,1,2,3,4];
+            tableSize   = 16; foodTypes  = [0,1,2,3,4];
+            foodTypeFn  = function() { return {
+              type:   select(foodTypes),
+              rotten: chance(1,5) }}
+            pottyCount  = 4;
+            customerDelayMin = 3; customerDelayMax = 5;
+            custSpawnFn = function() { return nextCustomer(); }
+            pottyTimeFn = function() { return rand(10,15)*1000; }
+            foodValueFn = function(foodType) { return 1; }
+            janitorCost = 5;
             break;
 
           default:
