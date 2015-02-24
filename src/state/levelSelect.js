@@ -290,6 +290,9 @@ var LevelSelect = {
   render: function() {
     for (var i=0; i < highestLevelBeat + 1; i++) {
       var rect = level_buttons[i];
+      if (rect === undefined) {
+        break;
+      }
       game.debug.text(i+1,
         rect.x+25,
         rect.y+125,
